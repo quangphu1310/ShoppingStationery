@@ -17,13 +17,13 @@ public partial class NguoiDung
 
     public int? MaDv { get; set; }
 
-    public int? MaTk { get; set; }
+    public string? TaiKhoan { get; set; }
+
+    public string? MatKhau { get; set; }
 
     public virtual ChucVu? MaCvNavigation { get; set; }
 
     public virtual DonVi? MaDvNavigation { get; set; }
-
-    public virtual TaiKhoan? MaTkNavigation { get; set; }
 
     public virtual ICollection<PhieuDeNghiM> PhieuDeNghiMs { get; set; } = new List<PhieuDeNghiM>();
 

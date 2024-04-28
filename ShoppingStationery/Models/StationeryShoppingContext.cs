@@ -37,8 +37,6 @@ public partial class StationeryShoppingContext : DbContext
 
     public virtual DbSet<PhieuSuaChua> PhieuSuaChuas { get; set; }
 
-    public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
-
     public virtual DbSet<ThietBi> ThietBis { get; set; }
 
     public virtual DbSet<VanPhongPham> VanPhongPhams { get; set; }
@@ -51,7 +49,7 @@ public partial class StationeryShoppingContext : DbContext
     {
         modelBuilder.Entity<ChiTietDeNghiM>(entity =>
         {
-            entity.HasKey(e => new { e.MaDnms, e.MaVpp }).HasName("PK__ChiTietD__6FA7F57B69AB86C4");
+            entity.HasKey(e => new { e.MaDnms, e.MaVpp }).HasName("PK__ChiTietD__6FA7F57B08634F16");
 
             entity.ToTable("ChiTietDeNghiMS");
 
@@ -78,7 +76,7 @@ public partial class StationeryShoppingContext : DbContext
 
         modelBuilder.Entity<ChiTietDeNghiSc>(entity =>
         {
-            entity.HasKey(e => new { e.MaDnsc, e.MaTb }).HasName("PK__ChiTietD__DEC9777445261277");
+            entity.HasKey(e => new { e.MaDnsc, e.MaTb }).HasName("PK__ChiTietD__DEC977747C16AF91");
 
             entity.ToTable("ChiTietDeNghiSC");
 
@@ -102,7 +100,7 @@ public partial class StationeryShoppingContext : DbContext
 
         modelBuilder.Entity<ChiTietPhieuMh>(entity =>
         {
-            entity.HasKey(e => new { e.MaPhieuMh, e.MaVpp }).HasName("PK__ChiTietP__DB127B142ED80702");
+            entity.HasKey(e => new { e.MaPhieuMh, e.MaVpp }).HasName("PK__ChiTietP__DB127B14021DA49D");
 
             entity.ToTable("ChiTietPhieuMH", tb => tb.HasTrigger("UpdateTotalPrice_PhieuMuaHang"));
 
@@ -114,17 +112,17 @@ public partial class StationeryShoppingContext : DbContext
             entity.HasOne(d => d.MaPhieuMhNavigation).WithMany(p => p.ChiTietPhieuMhs)
                 .HasForeignKey(d => d.MaPhieuMh)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChiTietPh__MaPhi__5812160E");
+                .HasConstraintName("FK__ChiTietPh__MaPhi__5629CD9C");
 
             entity.HasOne(d => d.MaVppNavigation).WithMany(p => p.ChiTietPhieuMhs)
                 .HasForeignKey(d => d.MaVpp)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChiTietPh__MaVPP__59063A47");
+                .HasConstraintName("FK__ChiTietPh__MaVPP__571DF1D5");
         });
 
         modelBuilder.Entity<ChiTietPhieuSc>(entity =>
         {
-            entity.HasKey(e => new { e.MaPhieuSc, e.MaTb }).HasName("PK__ChiTietP__6A7C7FE8933B02D3");
+            entity.HasKey(e => new { e.MaPhieuSc, e.MaTb }).HasName("PK__ChiTietP__6A7C7FE8735696A9");
 
             entity.ToTable("ChiTietPhieuSC");
 
@@ -137,17 +135,17 @@ public partial class StationeryShoppingContext : DbContext
             entity.HasOne(d => d.MaPhieuScNavigation).WithMany(p => p.ChiTietPhieuScs)
                 .HasForeignKey(d => d.MaPhieuSc)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChiTietPh__MaPhi__656C112C");
+                .HasConstraintName("FK__ChiTietPh__MaPhi__628FA481");
 
             entity.HasOne(d => d.MaTbNavigation).WithMany(p => p.ChiTietPhieuScs)
                 .HasForeignKey(d => d.MaTb)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChiTietPhi__MaTB__66603565");
+                .HasConstraintName("FK__ChiTietPhi__MaTB__6383C8BA");
         });
 
         modelBuilder.Entity<ChucVu>(entity =>
         {
-            entity.HasKey(e => e.MaCv).HasName("PK__ChucVu__27258E76D8B02E61");
+            entity.HasKey(e => e.MaCv).HasName("PK__ChucVu__27258E76C05D97A2");
 
             entity.ToTable("ChucVu");
 
@@ -161,7 +159,7 @@ public partial class StationeryShoppingContext : DbContext
 
         modelBuilder.Entity<DonVi>(entity =>
         {
-            entity.HasKey(e => e.MaDv).HasName("PK__DonVi__27258657324B7965");
+            entity.HasKey(e => e.MaDv).HasName("PK__DonVi__27258657F93CB3FE");
 
             entity.ToTable("DonVi");
 
@@ -173,7 +171,7 @@ public partial class StationeryShoppingContext : DbContext
 
         modelBuilder.Entity<NguoiDung>(entity =>
         {
-            entity.HasKey(e => e.MaNd).HasName("PK__NguoiDun__2725D724E87C8D78");
+            entity.HasKey(e => e.MaNd).HasName("PK__NguoiDun__2725D7243A6BD66F");
 
             entity.ToTable("NguoiDung");
 
@@ -186,28 +184,29 @@ public partial class StationeryShoppingContext : DbContext
             entity.Property(e => e.HoTen).HasMaxLength(100);
             entity.Property(e => e.MaCv).HasColumnName("MaCV");
             entity.Property(e => e.MaDv).HasColumnName("MaDV");
-            entity.Property(e => e.MaTk).HasColumnName("MaTK");
+            entity.Property(e => e.MatKhau)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.Sdt)
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("SDT");
+            entity.Property(e => e.TaiKhoan)
+                .HasMaxLength(100)
+                .IsUnicode(false);
 
             entity.HasOne(d => d.MaCvNavigation).WithMany(p => p.NguoiDungs)
                 .HasForeignKey(d => d.MaCv)
-                .HasConstraintName("FK__NguoiDung__MaCV__5FB337D6");
+                .HasConstraintName("FK__NguoiDung__MaCV__5DCAEF64");
 
             entity.HasOne(d => d.MaDvNavigation).WithMany(p => p.NguoiDungs)
                 .HasForeignKey(d => d.MaDv)
-                .HasConstraintName("FK__NguoiDung__MaDV__60A75C0F");
-
-            entity.HasOne(d => d.MaTkNavigation).WithMany(p => p.NguoiDungs)
-                .HasForeignKey(d => d.MaTk)
-                .HasConstraintName("FK__NguoiDung__MaTK__619B8048");
+                .HasConstraintName("FK__NguoiDung__MaDV__5EBF139D");
         });
 
         modelBuilder.Entity<PhieuDeNghiM>(entity =>
         {
-            entity.HasKey(e => e.MaDnms).HasName("PK__PhieuDeN__3CBB764370C409FE");
+            entity.HasKey(e => e.MaDnms).HasName("PK__PhieuDeN__3CBB7643557BB407");
 
             entity.ToTable("PhieuDeNghiMS");
 
@@ -227,7 +226,7 @@ public partial class StationeryShoppingContext : DbContext
 
         modelBuilder.Entity<PhieuDeNghiSc>(entity =>
         {
-            entity.HasKey(e => e.MaDnsc).HasName("PK__PhieuDeN__3CBB27728BCDA579");
+            entity.HasKey(e => e.MaDnsc).HasName("PK__PhieuDeN__3CBB27724A46797A");
 
             entity.ToTable("PhieuDeNghiSC");
 
@@ -247,7 +246,7 @@ public partial class StationeryShoppingContext : DbContext
 
         modelBuilder.Entity<PhieuMuaHang>(entity =>
         {
-            entity.HasKey(e => e.MaPhieuMh).HasName("PK__PhieuMua__880EF82CFB949D4A");
+            entity.HasKey(e => e.MaPhieuMh).HasName("PK__PhieuMua__880EF82CF298F5C1");
 
             entity.ToTable("PhieuMuaHang");
 
@@ -262,16 +261,16 @@ public partial class StationeryShoppingContext : DbContext
 
             entity.HasOne(d => d.MaDvNavigation).WithMany(p => p.PhieuMuaHangs)
                 .HasForeignKey(d => d.MaDv)
-                .HasConstraintName("FK__PhieuMuaHa__MaDV__5AEE82B9");
+                .HasConstraintName("FK__PhieuMuaHa__MaDV__59063A47");
 
             entity.HasOne(d => d.MaNdNavigation).WithMany(p => p.PhieuMuaHangs)
                 .HasForeignKey(d => d.MaNd)
-                .HasConstraintName("FK__PhieuMuaHa__MaND__59FA5E80");
+                .HasConstraintName("FK__PhieuMuaHa__MaND__5812160E");
         });
 
         modelBuilder.Entity<PhieuSuaChua>(entity =>
         {
-            entity.HasKey(e => e.MaPhieuSc).HasName("PK__PhieuSua__880E2FEE57E37DA5");
+            entity.HasKey(e => e.MaPhieuSc).HasName("PK__PhieuSua__880E2FEEC00F1FDA");
 
             entity.ToTable("PhieuSuaChua");
 
@@ -286,35 +285,16 @@ public partial class StationeryShoppingContext : DbContext
 
             entity.HasOne(d => d.MaDvNavigation).WithMany(p => p.PhieuSuaChuas)
                 .HasForeignKey(d => d.MaDv)
-                .HasConstraintName("FK__PhieuSuaCh__MaDV__6477ECF3");
+                .HasConstraintName("FK__PhieuSuaCh__MaDV__619B8048");
 
             entity.HasOne(d => d.MaNdNavigation).WithMany(p => p.PhieuSuaChuas)
                 .HasForeignKey(d => d.MaNd)
-                .HasConstraintName("FK__PhieuSuaCh__MaND__6383C8BA");
-        });
-
-        modelBuilder.Entity<TaiKhoan>(entity =>
-        {
-            entity.HasKey(e => e.MaTk).HasName("PK__TaiKhoan__27250070DE732B48");
-
-            entity.ToTable("TaiKhoan");
-
-            entity.Property(e => e.MaTk)
-                .ValueGeneratedNever()
-                .HasColumnName("MaTK");
-            entity.Property(e => e.MatKhau)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.Role).HasMaxLength(50);
-            entity.Property(e => e.TaiKhoan1)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("TaiKhoan");
+                .HasConstraintName("FK__PhieuSuaCh__MaND__60A75C0F");
         });
 
         modelBuilder.Entity<ThietBi>(entity =>
         {
-            entity.HasKey(e => e.MaTb).HasName("PK__ThietBi__2725006F457F13A6");
+            entity.HasKey(e => e.MaTb).HasName("PK__ThietBi__2725006F3275FC57");
 
             entity.ToTable("ThietBi");
 
@@ -331,12 +311,12 @@ public partial class StationeryShoppingContext : DbContext
 
             entity.HasOne(d => d.MaDvNavigation).WithMany(p => p.ThietBis)
                 .HasForeignKey(d => d.MaDv)
-                .HasConstraintName("FK__ThietBi__MaDV__628FA481");
+                .HasConstraintName("FK__ThietBi__MaDV__5FB337D6");
         });
 
         modelBuilder.Entity<VanPhongPham>(entity =>
         {
-            entity.HasKey(e => e.MaVpp).HasName("PK__VanPhong__31C83384F69DC388");
+            entity.HasKey(e => e.MaVpp).HasName("PK__VanPhong__31C83384005D2297");
 
             entity.ToTable("VanPhongPham");
 

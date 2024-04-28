@@ -44,7 +44,8 @@ CREATE TABLE [NguoiDung] (
   [Email] varchar(100),
   [MaCV] int,
   [MaDV] int,
-  [MaTK] int
+	TaiKhoan varchar(100),
+	MatKhau varchar(100)
 )
 GO
 
@@ -95,12 +96,12 @@ CREATE TABLE ChiTietDeNghiSC (
  
 );
  
-CREATE TABLE [TaiKhoan] (
-  [MaTK] int PRIMARY KEY,
-  [TaiKhoan] varchar(100),
-  [MatKhau] varchar(100),
-  [Role] nvarchar(50)
-)
+--CREATE TABLE [TaiKhoan] (
+--  [MaTK] int PRIMARY KEY,
+--  [TaiKhoan] varchar(100),
+--  [MatKhau] varchar(100),
+--  [Role] nvarchar(50)
+--)
 GO
 
 CREATE TABLE [ChucVu] (
@@ -166,8 +167,8 @@ GO
 ALTER TABLE [NguoiDung] ADD FOREIGN KEY ([MaDV]) REFERENCES [DonVi] ([MaDV])
 GO
 
-ALTER TABLE [NguoiDung] ADD FOREIGN KEY ([MaTK]) REFERENCES [TaiKhoan] ([MaTK])
-GO
+--ALTER TABLE [NguoiDung] ADD FOREIGN KEY ([MaTK]) REFERENCES [TaiKhoan] ([MaTK])
+--GO
 
 ALTER TABLE [ThietBi] ADD FOREIGN KEY ([MaDV]) REFERENCES [DonVi] ([MaDV])
 GO
@@ -194,12 +195,12 @@ VALUES
 (4, N'Nhân viên kỹ thuật'),
 (5, N'Nhân viên kế toán');
 
--- Thêm dữ liệu cho bảng TaiKhoan
-INSERT INTO TaiKhoan (MaTK, TaiKhoan, MatKhau, [Role])
-VALUES 
-(1, 'user1', 'password1', ''),
-(2, 'user2', 'password2', ''),
-(3, 'user3', 'password3', '');
+---- Thêm dữ liệu cho bảng TaiKhoan
+--INSERT INTO TaiKhoan (MaTK, TaiKhoan, MatKhau, [Role])
+--VALUES 
+--(1, 'user1', 'password1', ''),
+--(2, 'user2', 'password2', ''),
+--(3, 'user3', 'password3', '');
 
 -- Thêm dữ liệu cho bảng DonVi
 INSERT INTO DonVi (MaDV, TenD)
@@ -212,11 +213,11 @@ VALUES
 ;
 
 -- Thêm dữ liệu cho bảng NguoiDung
-INSERT INTO NguoiDung (MaND, HoTen, SDT, Email, MaCV, MaDV, MaTK)
+INSERT INTO NguoiDung (MaND, HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
 VALUES 
-(1, N'Người dùng 1', '123456789', 'user1@example.com', 2, 1, 1),
-(2, N'Người dùng 2', '987654321', 'user2@example.com', 3, 4, 2),
-(3, N'Người dùng 3', '0987654321', 'user3@example.com', 4, 5, 3);
+(1, N'Người dùng 1', '123456789', 'user1@example.com', 2, 1, 'user1','pw1'),
+(2, N'Người dùng 2', '987654321', 'user2@example.com', 3, 4, 'user2','pw2'),
+(3, N'Người dùng 3', '0987654321', 'user3@example.com', 4, 5, 'user3','pw3');
 
 -- Thêm dữ liệu cho bảng ThietBi
 INSERT INTO ThietBi (MaTB, TenTB, LoaiTB, NamSuDung, MaDV)
@@ -283,7 +284,7 @@ VALUES
 (3, N'Yêu cầu thay thế linh kiện máy chiếu', '2024-04-12', N'Đang xem xét',2 ,3);
 
 Select * from ChucVu
-Select * from TaiKhoan
+--Select * from TaiKhoan
 select * from DonVi
 Select * from NguoiDung
 
@@ -322,7 +323,7 @@ RETURN
     WHERE [TrangThai] = @TrangThai
 );
 Go
-SELECT *
+--SELECT *
 --FROM dbo.FilterPhieuDeNghiSCByTrangThai(N'Không thông qua');
 
 go

@@ -17,6 +17,8 @@ namespace ShoppingStationery.Controllers
 
         public IActionResult Index()
         {
+            //var list = _db.NguoiDungs.ToList();
+            //ViewBag.list = list;
 			return View();
         }
 
