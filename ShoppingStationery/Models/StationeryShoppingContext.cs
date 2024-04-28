@@ -175,10 +175,10 @@ public partial class StationeryShoppingContext : DbContext
 
             entity.ToTable("NguoiDung");
 
-            entity.Property(e => e.MaNd)
-                .ValueGeneratedNever()
-                .HasColumnName("MaND");
-            entity.Property(e => e.Email)
+			entity.Property(e => e.MaNd)
+		.HasColumnName("MaND")
+		.ValueGeneratedOnAdd();
+			entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.HoTen).HasMaxLength(100);

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ShoppingStationery.Models.NguoiDungViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="mx-2 my-2">
+<h1 class="text-center mt-2">Quản lý tài khoản</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary text-white">Thêm mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã ND</th>
+            <th>Họ Tên</th>
+            <th>Số ĐT</th>
+            <th>Email</th>
+            <th>Tài Khoản</th>
+            <th>Mật Khẩu</th>
+            <th>Chức Vụ</th>
+            <th>Đơn Vị</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>@item.MaNd</td>
+                <td>@item.HoTen</td>
+                <td>@item.Sdt</td>
+                <td>@item.Email</td>
+                <td>@item.TaiKhoan</td>
+                <td>@item.MatKhau</td>
+                <td>@item.TenCV</td>
+                <td>@item.TenD</td>
+            <td>
+                    <a class="btn btn-info text-white" asp-action="Edit" asp-route-id="@item.MaNd">Sửa</a>
+                    <a class="btn btn-info text-white" asp-action="Details" asp-route-id="@item.MaNd">Chi tiết</a>
+                    <a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@item.MaNd">Xoá</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

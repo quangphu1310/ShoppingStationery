@@ -1,0 +1,78 @@
+﻿@model ShoppingStationery.Models.NguoiDung
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                        <a asp-action="Index" class="btn btn-secondary me-5 ml-2 float-start">Trở về danh sách</a>
+                    <h4 class="mb-0  text-white">Chỉnh sửa tài khoản</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" class="justify-content-center">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="MaNd" />
+
+                        <div class="form-group">
+                            <label asp-for="HoTen" class="control-label">Họ tên</label>
+                            <input asp-for="HoTen" class="form-control" />
+                            <span asp-validation-for="HoTen" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Sdt" class="control-label">Số điện thoại</label>
+                            <input asp-for="Sdt" class="form-control" />
+                            <span asp-validation-for="Sdt" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label">Email</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="MaCv" class="control-label">Chức vụ</label>
+                            <select asp-for="MaCv" class="form-control" asp-items="ViewBag.MaCv"></select>
+                            <span asp-validation-for="MaCv" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="MaDv" class="control-label">Đơn vị</label>
+                            <select asp-for="MaDv" class="form-control" asp-items="ViewBag.MaDv"></select>
+                            <span asp-validation-for="MaDv" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="TaiKhoan" class="control-label">Tài khoản</label>
+                            <input asp-for="TaiKhoan" class="form-control" />
+                            <span asp-validation-for="TaiKhoan" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="MatKhau" class="control-label">Mật khẩu</label>
+                            <input asp-for="MatKhau" class="form-control" />
+                            <span asp-validation-for="MatKhau" class="text-danger"></span>
+                        </div>
+
+                        
+                        <div class="form-group d-flex justify-content-center  mt-4">
+                            
+                                <input type="submit" value="Lưu" class="btn btn-primary text-white" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

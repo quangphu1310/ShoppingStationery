@@ -38,7 +38,7 @@ CREATE TABLE [PhieuMuaHang] (
 )
 GO
 CREATE TABLE [NguoiDung] (
-  [MaND] int PRIMARY KEY,
+  [MaND] int identity(1,1) PRIMARY KEY,
   [HoTen] nvarchar(100),
   [SDT] varchar(20),
   [Email] varchar(100),
@@ -213,11 +213,11 @@ VALUES
 ;
 
 -- Thêm dữ liệu cho bảng NguoiDung
-INSERT INTO NguoiDung (MaND, HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
+INSERT INTO NguoiDung ( HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
 VALUES 
-(1, N'Người dùng 1', '123456789', 'user1@example.com', 2, 1, 'user1','pw1'),
-(2, N'Người dùng 2', '987654321', 'user2@example.com', 3, 4, 'user2','pw2'),
-(3, N'Người dùng 3', '0987654321', 'user3@example.com', 4, 5, 'user3','pw3');
+( N'Người dùng 1', '123456789', 'user1@example.com', 2, 1, 'user1','pw1'),
+( N'Người dùng 2', '987654321', 'user2@example.com', 3, 4, 'user2','pw2'),
+( N'Người dùng 3', '0987654321', 'user3@example.com', 4, 5, 'user3','pw3');
 
 -- Thêm dữ liệu cho bảng ThietBi
 INSERT INTO ThietBi (MaTB, TenTB, LoaiTB, NamSuDung, MaDV)

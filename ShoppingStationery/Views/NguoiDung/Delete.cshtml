@@ -1,0 +1,62 @@
+﻿@model ShoppingStationery.Models.NguoiDungViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-white flex justify-content-evenly">
+                    <a asp-action="Index" class="btn btn-secondary me-5 ml-2 float-start">Trở về danh sách</a>
+                    <div><h4 class="mb-0  text-white">Xóa tài khoản</h4></div>
+                </div>
+                <div class="card-body">
+                    <h5 class="text-center mb-4 tex">Bạn có chắc chắn muốn xóa tài khoản này?</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Họ tên</label>
+                                <p>@Html.DisplayFor(model => model.HoTen)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Số điện thoại</label>
+                                <p>@Html.DisplayFor(model => model.Sdt)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <p>@Html.DisplayFor(model => model.Email)</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tài khoản</label>
+                                <p>@Html.DisplayFor(model => model.TaiKhoan)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Mật khẩu</label>
+                                <p>@Html.DisplayFor(model => model.MatKhau)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Tên chức vụ</label>
+                                <p>@Html.DisplayFor(model => model.TenCV)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Tên đơn vị</label>
+                                <p>@Html.DisplayFor(model => model.TenD)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <form asp-action="Delete" class="mr-2">
+                            <input type="hidden" asp-for="MaNd" />
+                            <button type="submit" class="btn btn-danger text-white">Xóa</button>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
