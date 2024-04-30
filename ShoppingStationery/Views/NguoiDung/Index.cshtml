@@ -3,45 +3,74 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string searchTerm = TempData["SearchTerm"] as string;
 }
-<div class="mx-2 my-2">
-<h1 class="text-center mt-2">Quản lý tài khoản</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary text-white">Thêm mới</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Mã ND</th>
-            <th>Họ Tên</th>
-            <th>Số ĐT</th>
-            <th>Email</th>
-            <th>Tài Khoản</th>
-            <th>Mật Khẩu</th>
-            <th>Chức Vụ</th>
-            <th>Đơn Vị</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-                <td>@item.MaNd</td>
-                <td>@item.HoTen</td>
-                <td>@item.Sdt</td>
-                <td>@item.Email</td>
-                <td>@item.TaiKhoan</td>
-                <td>@item.MatKhau</td>
-                <td>@item.TenCV</td>
-                <td>@item.TenD</td>
-            <td>
-                    <a class="btn btn-info text-white" asp-action="Edit" asp-route-id="@item.MaNd">Sửa</a>
-                    <a class="btn btn-info text-white" asp-action="Details" asp-route-id="@item.MaNd">Chi tiết</a>
-                    <a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@item.MaNd">Xoá</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="mx-2 my-2">
+    <h1 class="text-center mt-2">Quản lý tài khoản</h1>
+
+    <div class="d-flex justify-content-between">
+        <form asp-action="TimKiemNguoiDung" method="post" class="app-search-form">
+            <input type="text" placeholder="Tìm kiếm..." name="searchTerm" class="form-control search-input" value="@searchTerm">
+            <button type="submit" class="btn search-btn btn-primary" value="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+        <p>
+            <a asp-action="Create" class="btn btn-primary text-white">Thêm mới</a>
+        </p>
+    </div>
+
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã ND</th>
+                    <th>Họ Tên</th>
+                    <th>Số ĐT</th>
+                    <th>Email</th>
+                    <th>Tài Khoản</th>
+                    <th>Mật Khẩu</th>
+                    <th>Chức Vụ</th>
+                    <th>Đơn Vị</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaNd</td>
+                        <td>@item.HoTen</td>
+                        <td>@item.Sdt</td>
+                        <td>@item.Email</td>
+                        <td>@item.TaiKhoan</td>
+                        <td>@item.MatKhau</td>
+                        <td>@item.TenCV</td>
+                        <td>@item.TenD</td>
+                        <td>
+                            <a class="btn btn-info text-white" asp-action="Edit" asp-route-id="@item.MaNd">Sửa</a>
+                            <a class="btn btn-info text-white" asp-action="Details" asp-route-id="@item.MaNd">Chi tiết</a>
+                            <a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@item.MaNd">Xoá</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            <div >
+                <a asp-action="Index" class="btn btn-secondary me-5 ml-2 float-start">Trở về danh sách</a>
+            </div>
+
+                <h5 class="m-0 mt-2">Không tìm thấy kết quả phù hợp với từ khóa "@searchTerm".</h5>
+            
+        }
+        else
+        {
+            <p>Không có dữ liệu.</p>
+        }
+    }
 </div>

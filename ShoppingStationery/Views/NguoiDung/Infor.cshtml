@@ -1,0 +1,54 @@
+﻿@model ShoppingStationery.Models.NguoiDungViewModel
+
+@{
+    ViewData["Title"] = "Infor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center mb-4">Chi tiết tài khoản</h1>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mb-3">Trở về trang quản lý</a>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Thông tin người dùng</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Họ tên</label>
+                                <p>@Html.DisplayFor(model => model.HoTen)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Số điện thoại</label>
+                                <p>@Html.DisplayFor(model => model.Sdt)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <p>@Html.DisplayFor(model => model.Email)</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tài khoản</label>
+                                <p>@Html.DisplayFor(model => model.TaiKhoan)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Mật khẩu</label>
+                                <p>@Html.DisplayFor(model => model.MatKhau)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Tên chức vụ</label>
+                                <p>@Html.DisplayFor(model => model.TenCV)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Tên đơn vị</label>
+                                <p>@Html.DisplayFor(model => model.TenD)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

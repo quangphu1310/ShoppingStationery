@@ -1,0 +1,71 @@
+﻿@model ShoppingStationery.Models.NguoiDung
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app app-login p-0">
+	<div class="row g-0 app-auth-wrapper">
+		<div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+			<div class="d-flex flex-column align-content-end">
+				<div class="app-auth-body mx-auto">
+					<div class="app-auth-branding mb-4"><a class="app-logo" href="home"><img class="logo-icon me-2" src="https://upload.wikimedia.org/wikipedia/commons/4/42/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_S%C6%B0_ph%E1%BA%A1m_K%E1%BB%B9_thu%E1%BA%ADt_%C4%90%C3%A0_N%E1%BA%B5ng.png" alt="logo"></a></div>
+					<h2 class="auth-heading text-center mb-5">Đăng nhập</h2>
+					<div class="auth-form-container text-start">
+						
+								<form asp-action="Login" class="auth-form login-form">
+									<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+							<div class="email mb-3">
+								<label asp-for="TaiKhoan" class="control-label sr-only">Tài khoản</label>
+								<input asp-for="TaiKhoan" class="form-control signin-email" placeholder="Tài khoản" required="required" />
+										<span asp-validation-for="TaiKhoan" class="text-danger"></span>
+									</div>
+							<div class="password mb-3">
+								<label asp-for="MatKhau" class="control-label sr-only">Mật khẩu</label>
+								<input asp-for="MatKhau" type="password" class="form-control signin-password" placeholder="Mật khẩu" required="required" />
+										<span asp-validation-for="MatKhau" class="text-danger"></span>
+									</div>
+							@if (ViewBag.error != null)
+							{
+								<div class="alert alert-danger text-center">
+									@ViewBag.error
+								</div>
+							}
+
+							<div class="text-center">
+								<input type="submit" value="Đăng nhập" class="btn app-btn-primary w-100 theme-btn mx-auto" />
+									</div>
+								</form>
+					
+					</div><!--//auth-form-container-->
+
+				</div><!--//auth-body-->
+
+				
+			</div><!--//flex-column-->
+		</div><!--//auth-main-col-->
+		<div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
+			<div class="auth-background-holder">
+			</div>
+			<div class="auth-background-mask"></div>
+			<div class="auth-background-overlay p-3 p-lg-5">
+				<div class="d-flex flex-column align-content-end h-100">
+					<div class="h-100"></div>
+					<div class="overlay-content p-3 p-lg-4 rounded">
+						<h5 class="mb-3 overlay-title">Trang quản lý mua sắm văn phòng phẩm, sữa chữa thiết bị</h5>
+						<div>Đây là trang web thuộc <a href="https://ute.udn.vn/default.aspx">Đại học Sư Phạm Kỹ Thuật - Đại Học Đà Nẵng</a>.</div>
+					</div>
+				</div>
+			</div><!--//auth-background-overlay-->
+		</div><!--//auth-background-col-->
+
+	</div><!--//row-->
+
+
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
