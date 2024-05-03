@@ -1,0 +1,357 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<ShoppingStationery.Models.PhieuDeNghiSc>
+
+@{
+    ViewData["Title"] = "Danh sách đề nghị sửa chữa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    // string searchTerm = TempData["SearchTerm"] as string;
+}
+
+
+<div class="app-content pt-3 p-md-3 p-lg-4">
+	<div class="container-xl">
+
+		<div class="row g-3 mb-4 align-items-center justify-content-between">
+			<div class="col-auto">
+				<h2>Danh sách đề nghị sửa chữa</h2>
+			</div>
+			<div class="col-auto">
+				<div class="page-utilities">
+					<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+						<div class="col-auto">
+							<form class="table-search-form row gx-1 align-items-center">
+								<div class="col-auto">
+									<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Search">
+								</div>
+								<div class="col-auto">
+									<button type="submit" class="btn app-btn-secondary">Search</button>
+								</div>
+							</form>
+
+						</div><!--//col-->
+					</div><!--//row-->
+				</div><!--//table-utilities-->
+			</div><!--//col-auto-->
+		</div><!--//row-->
+		@{
+			var userSession = Context.Session.GetString("User");
+			var user = new NguoiDung();
+			if (!string.IsNullOrEmpty(userSession))
+			{
+				user = JsonConvert.DeserializeObject<NguoiDung>(userSession);
+			}
+			if(user.MaCv == 1)
+			{
+				<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+					
+					<a class="flex-sm-fill text-sm-center nav-link active" id="all-list" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-pending" aria-selected="false">Trưởng phòng CSVC đã duyệt</a>
+					<a class="flex-sm-fill text-sm-center nav-link" id="ban-giam-hieu-list" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Ban giám hiệu đã duyệt</a>
+					<a class="flex-sm-fill text-sm-center nav-link" id="khong-thong-qua-list" data-bs-toggle="tab" href="#orders-khong-thong" role="tab" aria-controls="orders-cancelled" aria-selected="false">Không thông qua</a>
+				</nav>
+			}
+			if (user.MaCv == 3)
+			{
+				<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+
+					<a class="flex-sm-fill text-sm-center nav-link active" id="khoa-list" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Trường khoa đã duyệt</a>
+					<a class="flex-sm-fill text-sm-center nav-link" id="all-list" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-pending" aria-selected="false">Trưởng phòng CSVC đã duyệt</a>
+					
+				</nav>
+			}
+			if (user.MaCv == 2)
+			{
+				<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+
+					
+					<a class="flex-sm-fill text-sm-center nav-link active" id="dang-xem-xet-list" data-bs-toggle="tab" href="#orders-xem-xet" role="tab" aria-controls="orders-cancelled" aria-selected="false">Đang xem xét</a>
+					<a class="flex-sm-fill text-sm-center nav-link" id="khoa-list" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Trường khoa đã duyệt</a>
+
+				</nav>
+			}
+		
+		}
+
+
+		<div class="tab-content" id="orders-table-tab-content">
+			@{
+						if (user.MaCv == 3)
+						{
+							<div class="tab-pane fade show active" id="orders-paid" role="tabpanel" aria-labelledby="khoa-list">
+								<div class="app-card app-card-orders-table mb-5">
+									<div class="app-card-body">
+										<div class="table-responsive">
+
+											<table class="table mb-0 text-left">
+												<thead>
+													<tr>
+														<th class="cell">Mã phiếu</th>
+														<th class="cell">Người đề nghị</th>
+														<th class="cell">Ngày đề nghị</th>
+														<th class="cell">Ý kiến của phòng CSVC</th>
+														<th class="cell">Trạng thái</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													@foreach (var item in Model.Where(x => x.TrangThai == "Trưởng khoa đã duyệt"))
+													{
+														<tr>
+															<td class="cell">#@item.MaDnsc</td>
+															<td class="cell">@item.MaNdNavigation.HoTen</td>
+															<td class="cell">@item.NgayDeNghi</td>
+															<td class="cell">@item.YkienCsvc</td>
+															<td class="cell"><span class="badge bg-info">@item.TrangThai</span></td>
+															<td class="cell"><a class="btn-sm app-btn-secondary" asp-action="Details" asp-route-id="@item.MaDnsc">Chi tiết</a></td>
+
+														</tr>
+													}
+
+												</tbody>
+											</table>
+										</div><!--//table-responsive-->
+									</div><!--//app-card-body-->
+								</div><!--//app-card-->
+							</div>
+
+							<!--//tab-pane-->
+					<div class="tab-pane fade show" id="orders-all" role="tabpanel" aria-labelledby="all-list">
+						<div class="app-card app-card-orders-table mb-5">
+							<div class="app-card-body">
+								<div class="table-responsive">
+
+									<table class="table mb-0 text-left">
+										<thead>
+											<tr>
+												<th class="cell">Mã phiếu</th>
+												<th class="cell">Người đề nghị</th>
+												<th class="cell">Ngày đề nghị</th>
+												<th class="cell">Ý kiến của phòng CSVC</th>
+												<th class="cell">Trạng thái</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (var item in Model.Where(x => x.TrangThai == "Trưởng phòng CSVC đã duyệt"))
+											{
+												<tr>
+													<td class="cell">#@item.MaDnsc</td>
+													<td class="cell">@item.MaNdNavigation.HoTen</td>
+													<td class="cell">@item.NgayDeNghi</td>
+													<td class="cell">@item.YkienCsvc</td>
+													<td class="cell"><span class="badge bg-success">@item.TrangThai</span></td>
+													<td class="cell"><a class="btn-sm app-btn-secondary" asp-action="Details" asp-route-id="@item.MaDnsc">Chi tiết</a></td>
+
+												</tr>
+											}
+
+										</tbody>
+									</table>
+								</div><!--//table-responsive-->
+							</div><!--//app-card-body-->
+						</div><!--//app-card-->
+					</div>
+						}
+				}
+
+			
+
+			@if (user.MaCv == 1)
+			{
+				<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="all-list">
+					<div class="app-card app-card-orders-table mb-5">
+						<div class="app-card-body">
+							<div class="table-responsive">
+
+								<table class="table mb-0 text-left">
+									<thead>
+										<tr>
+											<th class="cell">Mã phiếu</th>
+											<th class="cell">Người đề nghị</th>
+											<th class="cell">Ngày đề nghị</th>
+											<th class="cell">Ý kiến của phòng CSVC</th>
+											<th class="cell">Trạng thái</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in Model.Where(x => x.TrangThai == "Trưởng phòng CSVC đã duyệt"))
+										{
+											<tr>
+												<td class="cell">#@item.MaDnsc</td>
+												<td class="cell">@item.MaNdNavigation.HoTen</td>
+												<td class="cell">@item.NgayDeNghi</td>
+												<td class="cell">@item.YkienCsvc</td>
+												<td class="cell"><span class="badge bg-success">@item.TrangThai</span></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" asp-action="Details" asp-route-id="@item.MaDnsc">Chi tiết</a></td>
+
+											</tr>
+										}
+
+									</tbody>
+								</table>
+							</div><!--//table-responsive-->
+						</div><!--//app-card-body-->
+					</div><!--//app-card-->
+				</div>
+
+				<!--//tab-pane-->
+				<div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="ban-giam-hieu-list">
+					<div class="app-card app-card-orders-table mb-5">
+						<div class="app-card-body">
+							<div class="table-responsive">
+								<table class="table mb-0 text-left">
+									<thead>
+										<tr>
+											<th class="cell">Mã phiếu</th>
+											<th class="cell">Người đề nghị</th>
+											<th class="cell">Ngày đề nghị</th>
+											<th class="cell">Ý kiến của phòng CSVC</th>
+											<th class="cell">Trạng thái</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in Model.Where(x => x.TrangThai == "Ban giám hiệu đã duyệt"))
+										{
+											<tr>
+												<td class="cell">#@item.MaDnsc</td>
+												<td class="cell">@item.MaNdNavigation.HoTen</td>
+												<td class="cell">@item.NgayDeNghi</td>
+												<td class="cell">@item.YkienCsvc</td>
+												<td class="cell"><span class="badge bg-success">@item.TrangThai</span></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" asp-action="Details" asp-route-id="@item.MaDnsc">Chi tiết</a></td>
+
+											</tr>
+										}
+
+									</tbody>
+								</table>
+							</div><!--//table-responsive-->
+						</div><!--//app-card-body-->
+					</div><!--//app-card-->
+				</div>
+
+				<!--//tab-pane-->
+				<div class="tab-pane fade" id="orders-khong-thong" role="tabpanel" aria-labelledby="khong-thong-qua-list">
+					<div class="app-card app-card-orders-table mb-5">
+						<div class="app-card-body">
+							<div class="table-responsive">
+								<table class="table mb-0 text-left">
+									<thead>
+										<tr>
+											<th class="cell">Mã phiếu</th>
+											<th class="cell">Người đề nghị</th>
+											<th class="cell">Ngày đề nghị</th>
+											<th class="cell">Ý kiến của phòng CSVC</th>
+											<th class="cell">Trạng thái</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in Model.Where(x => x.TrangThai == "Không thông qua"))
+										{
+											<tr>
+												<td class="cell">#@item.MaDnsc</td>
+												<td class="cell">@item.MaNdNavigation.HoTen</td>
+												<td class="cell">@item.NgayDeNghi</td>
+												<td class="cell">@item.YkienCsvc</td>
+												<td class="cell"><span class="badge bg-danger">@item.TrangThai</span></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" asp-action="Details" asp-route-id="@item.MaDnsc">Chi tiết</a></td>
+
+											</tr>
+										}
+
+									</tbody>
+								</table>
+							</div><!--//table-responsive-->
+						</div><!--//app-card-body-->
+					</div><!--//app-card-->
+				</div>
+
+				<!--//tab-pane-->
+			}
+			
+			
+			@if (user.MaCv == 2)
+			{
+				<div class="tab-pane fade show active" id="orders-xem-xet" role="tabpanel" aria-labelledby="dang-xem-xet-list">
+					<div class="app-card app-card-orders-table mb-5">
+						<div class="app-card-body">
+							<div class="table-responsive">
+								<table class="table mb-0 text-left">
+									<thead>
+										<tr>
+											<th class="cell">Mã phiếu</th>
+											<th class="cell">Người đề nghị</th>
+											<th class="cell">Ngày đề nghị</th>
+											<th class="cell">Ý kiến của phòng CSVC</th>
+											<th class="cell">Trạng thái</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in Model.Where(x => x.TrangThai == "Đang xem xét"))
+										{
+											<tr>
+												<td class="cell">#@item.MaDnsc</td>
+												<td class="cell">@item.MaNdNavigation.HoTen</td>
+												<td class="cell">@item.NgayDeNghi</td>
+												<td class="cell">@item.YkienCsvc</td>
+												<td class="cell"><span class="badge bg-warning">@item.TrangThai</span></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" asp-action="Details" asp-route-id="@item.MaDnsc">Chi tiết</a></td>
+
+											</tr>
+										}
+
+									</tbody>
+								</table>
+							</div><!--//table-responsive-->
+						</div><!--//app-card-body-->
+					</div><!--//app-card-->
+				</div>
+
+				<!--//tab-pane-->
+				<div class="tab-pane fade show" id="orders-paid" role="tabpanel" aria-labelledby="khoa-list">
+					<div class="app-card app-card-orders-table mb-5">
+						<div class="app-card-body">
+							<div class="table-responsive">
+
+								<table class="table mb-0 text-left">
+									<thead>
+										<tr>
+											<th class="cell">Mã phiếu</th>
+											<th class="cell">Người đề nghị</th>
+											<th class="cell">Ngày đề nghị</th>
+											<th class="cell">Ý kiến của phòng CSVC</th>
+											<th class="cell">Trạng thái</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in Model.Where(x => x.TrangThai == "Trưởng khoa đã duyệt"))
+										{
+											<tr>
+												<td class="cell">#@item.MaDnsc</td>
+												<td class="cell">@item.MaNdNavigation.HoTen</td>
+												<td class="cell">@item.NgayDeNghi</td>
+												<td class="cell">@item.YkienCsvc</td>
+												<td class="cell"><span class="badge bg-info">@item.TrangThai</span></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" asp-action="Details" asp-route-id="@item.MaDnsc">Chi tiết</a></td>
+
+											</tr>
+										}
+
+									</tbody>
+								</table>
+							</div><!--//table-responsive-->
+						</div><!--//app-card-body-->
+					</div><!--//app-card-->
+				</div>
+			}
+			
+		</div><!--//tab-content-->
+
+
+
+	</div><!--//container-fluid-->
+</div><!--//app-content-->
