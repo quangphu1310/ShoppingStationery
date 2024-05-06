@@ -80,7 +80,9 @@ CREATE TABLE ChiTietDeNghiMS (
   MaND INT FOREIGN KEY REFERENCES NguoiDung(MaND),
   YKienCSVC Nvarchar(255),
   NgayDeNghi DATE,
-  TrangThai NVARCHAR(255) CHECK (TrangThai IN (N'Đang xem xét', N'Được phê duyệt', N'Không thông qua')),
+  --TrangThai NVARCHAR(255) CHECK (TrangThai IN (N'Đang xem xét', N'Được phê duyệt', N'Không thông qua')),
+  TrangThai NVARCHAR(255) CHECK (TrangThai IN (N'Trưởng khoa đã duyệt', N'Trưởng phòng CSVC đã duyệt', N'Ban giám hiệu đã duyệt',N'Không thông qua',N'Đang xem xét')),
+
   TongSoLoai int
 );
  
@@ -217,7 +219,14 @@ VALUES
 ( N'Người dùng 1', '123456789', 'user1@example.com', 2, 1, 'user1','pw1'),
 ( N'Người dùng 2', '987654321', 'user2@example.com', 3, 4, 'user2','pw2'),
 ( N'Người dùng 3', '0987654321', 'user3@example.com', 4, 5, 'user3','pw3');
-
+-- Thêm dữ liệu cho bảng NguoiDung
+INSERT INTO NguoiDung ( HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
+VALUES 
+( N'Người dùng 4', '123466789', 'user4@example.com', 1,null, 'bgh','1'),
+( N'Người dùng 5', '987644321', 'user5@example.com', 5, 5, 'userketoan','1');
+INSERT INTO NguoiDung ( HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
+VALUES 
+( N'Người dùng 4', '123466789', 'user9@example.com', 1,null, 'bgh','phuochuan001@#')
 -- Thêm dữ liệu cho bảng ThietBi
 INSERT INTO ThietBi (MaTB, TenTB, LoaiTB, NamSuDung, MaDV)
 VALUES 
@@ -278,14 +287,49 @@ VALUES
 -- Thêm dữ liệu cho bảng PhieuDeNghiSC
 INSERT INTO PhieuDeNghiSC (MaDNSC, YKienCSVC, NgayDeNghi, TrangThai, MaND,TongSoLoai)
 VALUES 
-(1, N'Yêu cầu sửa chữa máy in', '2024-04-10', N'Được phê duyệt', 1,1),
-(2, N'Yêu cầu bảo dưỡng máy tính', '2024-04-11', N'Không thông qua', 3,2),
-(3, N'Yêu cầu thay thế linh kiện máy chiếu', '2024-04-12', N'Đang xem xét',2 ,3);
+(1, N'Yêu cầu sửa chữa máy in', '2024-04-10', N'Trưởng khoa đã duyệt', 1,1),
+(2, N'Yêu cầu bảo dưỡng máy tính', '2024-04-11', N'Trưởng phòng CSVC đã duyệt', 3,2),
+(3, N'Yêu cầu thay thế linh kiện máy chiếu', '2024-04-12', N'Trưởng khoa đã duyệt',2 ,3);
+INSERT INTO ChiTietDeNghiSC (MaDNSC, MaTB, DVT, SoLuong, LyDo)
+VALUES 
+(1, 1, N'Cái', 10, N'Đang hỏng'),
+(1, 2, N'Cây', 5, N'Cần bảo dưỡng'),
+(2, 3, N'Cái', 2, N'Cần thay thế linh kiện'),
+(3, 1, N'Cái', 3, N'Cần sửa chữa'),
+(3, 2, N'Cây', 1, N'Cần bảo dưỡng định kỳ');
+
+-- Thêm dữ liệu cho bảng PhieuDeNghiSC
+INSERT INTO PhieuDeNghiSC (MaDNSC, YKienCSVC, NgayDeNghi, TrangThai, MaND, TongSoLoai)
+VALUES 
+(4, N'Yêu cầu sửa chữa máy tính xách tay', '2024-04-10', N'Đang xem xét', 2, 1),
+(5, N'Yêu cầu mua thêm giấy A4', '2024-04-11', N'Đang xem xét', 3, 2),
+(6, N'Yêu cầu thay đổi linh kiện máy chiếu', '2024-04-12', N'Đang xem xét', 1, 3),
+(7, N'Yêu cầu bảo dưỡng máy tính để bàn', '2024-04-13', N'Đang xem xét', 2, 1),
+(8, N'Yêu cầu mua thêm bút chì màu', '2024-04-14', N'Đang xem xét', 3, 2),
+(9, N'Yêu cầu sửa chữa máy in màu', '2024-04-15', N'Đang xem xét', 1, 3),
+(10, N'Yêu cầu mua thêm giấy A3', '2024-04-16', N'Đang xem xét', 2, 1),
+(11, N'Yêu cầu thay đổi linh kiện máy tính xách tay', '2024-04-17', N'Đang xem xét', 3, 2),
+(12, N'Yêu cầu bảo dưỡng máy chiếu', '2024-04-18', N'Đang xem xét', 1, 3),
+(13, N'Yêu cầu sửa chữa máy in', '2024-04-19', N'Đang xem xét', 2, 1);
+
+-- Thêm dữ liệu cho bảng ChiTietDeNghiSC
+INSERT INTO ChiTietDeNghiSC (MaDNSC, MaTB, DVT, SoLuong, LyDo)
+VALUES 
+(4, 1, N'Cái', 10, N'Đang hỏng'),
+(4, 2, N'Cây', 5, N'Cần bảo dưỡng'),
+(5, 3, N'Cái', 2, N'Cần thay thế linh kiện'),
+(6, 1, N'Cái', 3, N'Cần sửa chữa'),
+(6, 2, N'Cây', 1, N'Cần bảo dưỡng định kỳ'),
+(7, 1, N'Cái', 10, N'Đang hỏng'),
+(7, 2, N'Cây', 5, N'Cần bảo dưỡng'),
+(8, 3, N'Cái', 2, N'Cần thay thế linh kiện'),
+(9, 1, N'Cái', 3, N'Cần sửa chữa'),
+(9, 2, N'Cây', 1, N'Cần bảo dưỡng định kỳ');
+
 
 Select * from ChucVu
---Select * from TaiKhoan
-select * from DonVi
 Select * from NguoiDung
+select * from DonVi
 
 select * from ThietBi
 select * from VanPhongPham
@@ -323,7 +367,7 @@ RETURN
 );
 Go
 --SELECT *
---FROM dbo.FilterPhieuDeNghiSCByTrangThai(N'Không thông qua');
+--FROM dbo.FilterPhieuDeNghiSCByTrangThai(N'Trưởng khoa đã duyệt');
 
 go
 -- Function lọc phiếu đề nghị trong khoảng thời gian cụ thể:
@@ -372,7 +416,7 @@ BEGIN
 END;
 
 --Select * from PhieuDeNghiSC
---EXEC dbo.UpdatePhieuDeNghiSCStatus 1, N'Đang xem xét'
+--EXEC dbo.UpdatePhieuDeNghiSCStatus 1, N'Trưởng khoa đã duyệt'
 --Select * from PhieuDeNghiSC
 
 Go
@@ -443,5 +487,3 @@ END;
 --Select * from PhieuMuaHang
 --Select * from ChiTietPhieuMH
 --go
-
-select * from PhieuDeNghiMS

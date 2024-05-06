@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ShoppingStationery.Models.ChiTietPhieuSc>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .button a {
+        color: blue; /* Default link color */
+        text-decoration: none; /* Remove underline */
+        padding: 5px 10px; /* Add padding to the link */
+        border: 1px solid blue; /* Add border */
+        border-radius: 3px; /* Add border radius */
+        background-color: #f0f0f0; /* Add background color */
+    }
+
+        .button a:hover {
+            color: darkblue; /* Change color on hover */
+            background-color: #e0e0e0; /* Change background color on hover */
+        }
+</style>
+
+
+<div class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+        <div class="row g-3 mb-4 align-items-center justify-content-between">
+            <div class="col-auto">
+                <h2>Lập phiếu sửa chữa</h2>
+                <a asp-action="Index" asp-controller="PhieuSuaChuas">Quay lại</a> |
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("nội dung")
+                    @* @Html.DisplayNameFor( model => model.NoiDung) *@
+                </th>
+                <th>
+                    @Html.DisplayName("Chi phí")
+                    @* @Html.DisplayNameFor(model => model.ChiPhi) *@
+                </th>
+                <th>
+                    @Html.DisplayName("Ghi chú")
+                    @* @Html.DisplayNameFor(model => model.GhiChu) *@
+                </th>
+                <th>
+                    @Html.DisplayName("Mã phiếu sửa chữa")
+                    @* @Html.DisplayNameFor(model => model.MaPhieuScNavigation) *@
+                </th>
+                <th>
+                    @Html.DisplayName("Thiết bị")
+                    @* @Html.DisplayNameFor(model => model.MaTbNavigation.TenTb) *@
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoiDung)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChiPhi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GhiChu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaPhieuScNavigation.MaPhieuSc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaTbNavigation.MaTb)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Loại bỏ", "Delete", new { imaTB = item.MaTb, maPSC = item.MaPhieuSc }, new { @class = "delete-link" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="button">
+
+        <a asp-action="Create" asp-route-id="@ViewBag.PhieuId">Thêm mới</a>
+    </div>
+</div>

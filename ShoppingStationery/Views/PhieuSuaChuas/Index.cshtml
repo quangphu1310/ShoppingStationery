@@ -1,0 +1,201 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<ShoppingStationery.Models.PhieuSuaChua>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .col-md-4 {
+        /* Your styles for the outer container, adjust as needed */
+        width: 33.333333%; /* Adjust width according to your layout */
+        float: left; /* Adjust layout if needed */
+        padding: 0 15px; /* Adjust padding as per your design */
+    }
+
+    form {
+        /* Your styles for the form element */
+        margin-bottom: 15px; /* Adjust margin as per your design */
+    }
+
+    label {
+        /* Your styles for labels */
+        display: block; /* Ensure labels appear on a new line */
+        font-weight: bold; /* Adjust font-weight as per your design */
+    }
+
+    input[type="text"],
+    select {
+        /* Your styles for text inputs and select elements */
+        width: 100%; /* Make inputs and selects fill the container */
+        padding: 8px; /* Adjust padding as per your design */
+        margin-bottom: 10px; /* Adjust margin as per your design */
+        border: 1px solid #ccc; /* Adjust border as per your design */
+        border-radius: 4px; /* Adjust border-radius as per your design */
+        box-sizing: border-box; /* Ensure padding and border are included in the width */
+    }
+
+    input[type="submit"] {
+        /* Your styles for submit button */
+        background-color: #4CAF50; /* Button color */
+        color: white; /* Button text color */
+        padding: 10px 15px; /* Adjust padding as per your design */
+        border: none; /* Remove border */
+        border-radius: 4px; /* Adjust border-radius as per your design */
+        cursor: pointer; /* Add cursor pointer on hover */
+        font-size: 16px; /* Adjust font size as per your design */
+    }
+
+        input[type="submit"]:hover {
+            /* Your styles for submit button on hover */
+            background-color: #45a049; /* Button color on hover */
+        }
+
+    .col-md-4 {
+        /* Your existing styles */
+        width: 33.333333%;
+        float: none; /* Remove floating */
+        margin: 0 auto; /* Center the div horizontally */
+        text-align: center; /* Center the contents of the div */
+    }
+
+</style>
+
+
+
+
+
+<div class="app-content pt-3 p-md-3 p-lg-4">
+
+    <div class="container-xl">
+        <div class="row g-3 mb-4 align-items-center justify-content-between">
+            <div class="col-auto">
+                <h2>Lập phiếu sửa chữa</h2>
+            </div>
+        </div>
+        <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+
+            <a class="flex-sm-fill text-sm-center nav-link active" id="khoa-list" data-bs-toggle="tab" href="#PhieuMuaHang_danhsach_id" role="tab" aria-controls="orders-paid" aria-selected="false">Danh sách phiếu sửa chữa</a>
+            <a class="flex-sm-fill text-sm-center nav-link" id="all-list" data-bs-toggle="tab" href="#PhieuMuaHang_taomoi_id" role="tab" aria-controls="orders-pending" aria-selected="false">Tạo phiếu sửa chữa</a>
+
+        </nav>
+    </div>
+    <div class="tab-content" id="orders-table-tab-content">
+
+
+        <div class="tab-pane fade show active" id="PhieuMuaHang_danhsach_id" role="tabpanel" aria-labelledby="dang-xem-xet-list">
+            <div class="app-card app-card-orders-table mb-5">
+                <div class="app-card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Ngày lập")
+                                        @* @Html.DisplayNameFor(model => model.NgayLap) *@
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Tổng giá trị")
+                                        @* @Html.DisplayNameFor(model => model.TongGiaTri) *@
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Trạng thái")
+                                        @* @Html.DisplayNameFor(model => model.TrangThai) *@
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Ghi chú")
+                                        @* @Html.DisplayNameFor(model => model.GhiChu) *@
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Đơn vị")
+                                        @* @Html.DisplayNameFor(model => model.MaDvNavigation.TenD) *@
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Người tạo")
+                                        @* @Html.DisplayNameFor(model => model.MaNdNavigation.HoTen) *@
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NgayLap)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TongGiaTri)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TrangThai)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.GhiChu)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDvNavigation.TenD)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaNdNavigation.HoTen)
+                                        </td>
+                                        <td>
+                                            <a asp-controller="ChiTietPhieuScs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuSc">Cập nhật chi tiết</a> 
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div><!--//table-responsive-->
+                </div><!--//app-card-body-->
+            </div><!--//app-card-->
+        </div>
+
+        <div class="tab-pane fade show" id="PhieuMuaHang_taomoi_id" role="tabpanel" aria-labelledby="khoa-list">
+            <div class="app-card app-card-orders-table mb-5">
+                <div class="app-card-body">
+                    <div class="table-responsive">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @{
+                                    var userSession = Context.Session.GetString("User");
+                                    var user = JsonConvert.DeserializeObject<NguoiDung>(userSession);
+                                }
+                                @using (Html.BeginForm("CreateNew", "PhieuSuaChuas", FormMethod.Post))
+                                {
+                                    <input type="hidden" id="UserID" name="UserID" value="@user.MaNd" />
+                                    <div>
+                                        <label for="GhiChu">Ghi chú: </label>
+                                        <input type="text" id="GhiChu" name="GhiChu" />
+                                    </div>
+
+                                    <div>
+                                        <label for="MaDv">Chọn đơn vị:</label>
+                                        @{
+                                            var dvdvList = ViewData["DVDV"] as SelectList;
+                                            if (dvdvList != null)
+                                            {
+                                                @Html.DropDownList("MaDv", dvdvList, "-- Chọn đơn vị --", new { @class = "form-control" })
+                                            }
+                                            else
+                                            {
+                                                <p>Dữ liệu đơn vị không tồn tại.</p>
+                                            }
+                                        }
+
+                                    </div>
+
+                                    <input type="submit" value="Submit" />
+                                }
+
+                            </div>
+                        </div>
+
+                    </div><!--//table-responsive-->
+                </div><!--//app-card-body-->
+            </div><!--//app-card-->
+        </div>
+    </div>
+
+
+</div>
+

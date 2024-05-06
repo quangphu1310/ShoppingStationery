@@ -1,0 +1,111 @@
+﻿@model ShoppingStationery.Models.ChiTietPhieuSc
+
+@{
+    ViewData["Title"] = "Create";
+}
+<style>
+    .row {
+        /* Your styles for the row */
+        display: flex; /* Use flexbox for layout */
+        justify-content: center; /* Center the contents horizontally */
+    }
+
+    .col-md-4 {
+        /* Your styles for the column */
+        width: 33.333333%; /* Adjust width if needed */
+        padding: 0 15px; /* Adjust padding as per your design */
+    }
+
+    .form-group {
+        /* Your styles for form groups */
+        margin-bottom: 15px; /* Adjust margin as per your design */
+    }
+
+    label {
+        /* Your styles for labels */
+        font-weight: bold; /* Adjust font-weight as per your design */
+    }
+
+    input[type="text"],
+    select {
+        /* Your styles for text inputs and select elements */
+        width: 100%; /* Make inputs and selects fill the container */
+        padding: 8px; /* Adjust padding as per your design */
+        margin-top: 5px; /* Adjust margin as per your design */
+        border: 1px solid #ccc; /* Adjust border as per your design */
+        border-radius: 4px; /* Adjust border-radius as per your design */
+        box-sizing: border-box; /* Ensure padding and border are included in the width */
+    }
+
+    input[type="submit"] {
+        /* Your styles for submit button */
+        background-color: #007bff; /* Button color */
+        color: white; /* Button text color */
+        padding: 10px 20px; /* Adjust padding as per your design */
+        border: none; /* Remove border */
+        border-radius: 4px; /* Adjust border-radius as per your design */
+        cursor: pointer; /* Add cursor pointer on hover */
+    }
+
+        input[type="submit"]:hover {
+            /* Your styles for submit button on hover */
+            background-color: #0056b3; /* Button color on hover */
+        }
+
+    .form-main {
+        a text-align: center;
+    }
+
+
+</style>
+
+<div class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+        <div class="row g-3 mb-4 align-items-center justify-content-between">
+            <div class="col-auto">
+                <h2>Lập phiếu sửa chữa</h2>
+                <a asp-action="Index" asp-controller="PhieuSuaChuas">Quay lại</a> |
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" class="form-main">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="MaPhieuSc" class="control-label"></label>
+                    <input asp-for="MaPhieuSc" class="form-control" value="@ViewBag.MaPhieuSc"></input>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MaTb" class="control-label"></label>
+                    <select asp-for="MaTb" class="form-control" asp-items="ViewBag.MaTb"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NoiDung" class="control-label"></label>
+                    <input asp-for="NoiDung" class="form-control" />
+                    <span asp-validation-for="NoiDung" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ChiPhi" class="control-label"></label>
+                    <input asp-for="ChiPhi" class="form-control" />
+                    <span asp-validation-for="ChiPhi" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GhiChu" class="control-label"></label>
+                    <input asp-for="GhiChu" class="form-control" />
+                    <span asp-validation-for="GhiChu" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
