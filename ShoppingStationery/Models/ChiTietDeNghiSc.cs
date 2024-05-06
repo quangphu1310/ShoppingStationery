@@ -15,7 +15,7 @@ public partial class ChiTietDeNghiSc
 
     public string? LyDo { get; set; }
 
-    public virtual PhieuDeNghiSc MaDnscNavigation { get; set; } = null!;
+    public virtual PhieuDeNghiSc? MaDnscNavigation { get; set; }
 
-    public virtual ThietBi MaTbNavigation { get; set; } = null!;
+    public virtual ThietBi? MaTbNavigation { get; set; }
 }

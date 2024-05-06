@@ -1,0 +1,68 @@
+﻿@model ShoppingStationery.Models.PhieuDeNghiM
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white d-flex justify-content-center">
+                    <div>
+                        <h4 class="mb-0 text-white">Chỉnh sửa phiếu đề nghị mua sắm</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div class="form-group">
+                            <label asp-for="YkienCsvc" class="control-label">Ý kiến P.CSVC</label>
+                            <input asp-for="YkienCsvc" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="TrangThai" class="control-label">Trạng thái</label>
+                            @using Newtonsoft.Json;
+                            @{
+                                var userSession = Context.Session.GetString("User");
+                                if (userSession != null)
+                                {
+                                    var user = JsonConvert.DeserializeObject<NguoiDung>(userSession);
+                                    if (user.MaCv != 1 && user.MaCv != 4)
+                                    {
+                                        <input asp-for="TrangThai" class="form-control" readonly />
+                                    }
+                                    else
+                                    {
+                                        <select asp-for="TrangThai" class="form-control custom-select-extra-large" asp-items="ViewBag.TrangThai"></select>
+                                    }
+                                }
+                                else
+                                {
+                                    <input asp-for="TrangThai" class="form-control" readonly />
+                                }
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="TongSoLoai" class="control-label">Tổng số loại</label>
+                            <input asp-for="TongSoLoai" class="form-control" />
+                        </div>
+
+                        <div class="form-group d-flex justify-content-center mt-4">
+                            <input type="hidden" asp-for="MaDnms" />
+                            <input type="hidden" asp-for="Mand" />
+                            <a asp-action="Index" class="btn btn-secondary me-1 ml-1 float-start">Trở về danh sách</a>
+                            <input type="submit" value="Chỉnh sửa" class="btn btn-success text-white" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

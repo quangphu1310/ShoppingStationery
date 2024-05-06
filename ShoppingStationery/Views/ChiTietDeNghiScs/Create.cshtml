@@ -1,0 +1,53 @@
+﻿@model ShoppingStationery.Models.ChiTietDeNghiSc
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-center">
+                    <div>
+                        <h4 class="mb-0 text-white">Thêm mới chi tiết phiếu đề nghị sửa chữa</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <input type="hidden" name="idMaDnsc" value="@TempData["IdMaDnsc"]" />
+                        <div class="form-group">
+                            <label asp-for="MaTb" class="control-label">Thiết bị</label>
+                            <select asp-for="MaTb" id="maTb" class="form-control custom-select-extra-large" asp-items="ViewBag.MaTb"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Dvt" class="control-label">Đơn vị tính</label>
+                            <input asp-for="Dvt" id="dvt" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="SoLuong" class="control-label">Số lượng</label>
+                            <input asp-for="SoLuong" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LyDo" class="control-label">Lý do mua sắm</label>
+                            <input asp-for="LyDo" class="form-control" />
+                        </div>
+
+                        <div class="form-group d-flex justify-content-center mt-4">
+                            <a asp-action="Index" asp-route-idMaDnsc="@TempData["IdMaDnsc"]" class="btn btn-secondary me-1 ml-1 float-start">Trở về danh sách</a>
+                            <input type="submit" value="Thêm mới" class="btn btn-primary text-white" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

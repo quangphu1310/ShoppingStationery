@@ -8,8 +8,8 @@ go
 
 CREATE TABLE [VanPhongPham] (
   [MaVPP] int PRIMARY KEY,
-  [TenVPP] varchar(255),
-  [DonViTinh] varchar(50),
+  [TenVPP] nvarchar(255),
+  [DonViTinh] nvarchar(50),
   [DonGia] decimal(18,2),
   [TenNCC] nvarchar(255),
   [SDTNCC] varchar(20),
@@ -82,7 +82,6 @@ CREATE TABLE ChiTietDeNghiMS (
   NgayDeNghi DATE,
   TrangThai NVARCHAR(255) CHECK (TrangThai IN (N'Đang xem xét', N'Được phê duyệt', N'Không thông qua')),
   TongSoLoai int
-
 );
  
 CREATE TABLE ChiTietDeNghiSC (
@@ -444,3 +443,5 @@ END;
 --Select * from PhieuMuaHang
 --Select * from ChiTietPhieuMH
 --go
+
+select * from PhieuDeNghiMS
