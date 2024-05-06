@@ -24,4 +24,16 @@ public partial class PhieuSuaChua
     public virtual DonVi? MaDvNavigation { get; set; }
 
     public virtual NguoiDung? MaNdNavigation { get; set; }
+
+    public PhieuSuaChua(int maPhieuSc, DateOnly? ngayLap, decimal? tongGiaTri, string? trangThai, string? ghiChu, int? maNd, int? maDv)
+    {
+        MaPhieuSc = maPhieuSc;
+        NgayLap = ngayLap;
+        TongGiaTri = tongGiaTri;
+        TrangThai = trangThai;
+        GhiChu = ghiChu;
+        MaNd = maNd;
+        MaDv = maDv;
+       
+    }
 }

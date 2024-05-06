@@ -225,6 +225,9 @@ INSERT INTO NguoiDung ( HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
 VALUES 
 ( N'Người dùng 4', '123466789', 'user4@example.com', 1,null, 'bgh','1'),
 ( N'Người dùng 5', '987644321', 'user5@example.com', 5, 5, 'userketoan','1');
+INSERT INTO NguoiDung ( HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
+VALUES 
+( N'Người dùng 4', '123466789', 'user9@example.com', 1,null, 'bgh','phuochuan001@#')
 -- Thêm dữ liệu cho bảng ThietBi
 INSERT INTO ThietBi (MaTB, TenTB, LoaiTB, NamSuDung, MaDV)
 VALUES 
@@ -484,4 +487,10 @@ END;
 --	EXEC dbo.CreateChiTietPhieuMuaHang 5, 3 ,4 ,6000 , N'Ghi chú Tessttt';
 --Select * from PhieuMuaHang
 --Select * from ChiTietPhieuMH
---go
+go
+
+
+
+
+
+
