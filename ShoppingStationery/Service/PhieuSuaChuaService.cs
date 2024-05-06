@@ -26,13 +26,20 @@ namespace ShoppingStationery.Service
             Console.WriteLine(user);
             Random random = new Random();
             int randomId = random.Next();
-            PhieuSuaChua phieuSuaChua = new PhieuSuaChua(randomId, DateOnly.Parse(DateTime.Now.ToString()), 0, "Chưa hoàn thành", ghiChu, Int32.Parse(user), Int32.Parse(maDV));
+            while (PhieuExists(randomId))
+            {
+                randomId = random.Next();
+            }
+            PhieuSuaChua phieuSuaChua = new PhieuSuaChua(randomId, DateOnly.Parse(DateTime.Now.ToString("yyyy-MM-dd")), 0, "Chưa hoàn thành", ghiChu, Int32.Parse(user), Int32.Parse(maDV));
             context.PhieuSuaChuas.Add(phieuSuaChua);
             context.SaveChanges();
             return randomId;
 
+        }
 
-            return 0;
+        private bool PhieuExists(int randomId)
+        {
+            return context.PhieuSuaChuas.Any(a=>a.MaPhieuSc.Equals(randomId));
         }
 
         internal async Task addChiTietAsync(ChiTietPhieuSc chiTietPhieuSc)

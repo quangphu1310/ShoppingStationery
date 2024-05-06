@@ -1,9 +1,11 @@
 ﻿@using Newtonsoft.Json
-@model IEnumerable<ShoppingStationery.Models.PhieuSuaChua>
+@model IEnumerable<ShoppingStationery.Models.PhieuMuaHang>
 
 @{
     ViewData["Title"] = "Index";
 }
+
+
 <style>
     .col-md-4 {
         /* Your styles for the outer container, adjust as needed */
@@ -69,13 +71,13 @@
     <div class="container-xl">
         <div class="row g-3 mb-4 align-items-center justify-content-between">
             <div class="col-auto">
-                <h2>Lập phiếu sửa chữa</h2>
+                <h2>Lập phiếu mua hàng</h2>
             </div>
         </div>
         <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
 
-            <a class="flex-sm-fill text-sm-center nav-link active" id="khoa-list" data-bs-toggle="tab" href="#PhieuMuaHang_danhsach_id" role="tab" aria-controls="orders-paid" aria-selected="false">Danh sách phiếu sửa chữa</a>
-            <a class="flex-sm-fill text-sm-center nav-link" id="all-list" data-bs-toggle="tab" href="#PhieuMuaHang_taomoi_id" role="tab" aria-controls="orders-pending" aria-selected="false">Tạo phiếu sửa chữa</a>
+            <a class="flex-sm-fill text-sm-center nav-link active" id="khoa-list" data-bs-toggle="tab" href="#PhieuMuaHang_danhsach_id" role="tab" aria-controls="orders-paid" aria-selected="false">Danh sách phiếu mua hàng</a>
+            <a class="flex-sm-fill text-sm-center nav-link" id="all-list" data-bs-toggle="tab" href="#PhieuMuaHang_taomoi_id" role="tab" aria-controls="orders-pending" aria-selected="false">Tạo phiếu mua hàng</a>
 
         </nav>
     </div>
@@ -139,7 +141,7 @@
                                             @Html.DisplayFor(modelItem => item.MaNdNavigation.HoTen)
                                         </td>
                                         <td>
-                                            <a asp-controller="ChiTietPhieuScs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuSc">Cập nhật chi tiết</a> 
+                                            <a asp-controller="ChiTietPhieuMhs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuMh">Cập nhật chi tiết</a> 
                                         </td>
                                     </tr>
                                 }
@@ -160,7 +162,7 @@
                                     var userSession = Context.Session.GetString("User");
                                     var user = JsonConvert.DeserializeObject<NguoiDung>(userSession);
                                 }
-                                @using (Html.BeginForm("CreateNew", "PhieuSuaChuas", FormMethod.Post))
+                                @using (Html.BeginForm("CreateNew", "PhieuMuaHangs", FormMethod.Post))
                                 {
                                     <input type="hidden" id="UserID" name="UserID" value="@user.MaNd" />
                                     <div>
@@ -198,4 +200,3 @@
 
 
 </div>
-
