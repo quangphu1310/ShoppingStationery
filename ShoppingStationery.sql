@@ -344,6 +344,8 @@ select * from [ChiTietPhieuSC] --
 select * from [PhieuDeNghiMS]
 select * from [ChiTietDeNghiMS]
 
+select * from [PhieuSuaChua]
+select * from [PhieuMuaHang]
 Go
 
 
