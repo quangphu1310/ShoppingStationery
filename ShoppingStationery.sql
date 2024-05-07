@@ -61,7 +61,8 @@ CREATE TABLE PhieuDeNghiMS (
   MaDNMS INT PRIMARY KEY,
   MAND INT FOREIGN KEY REFERENCES NguoiDung(MaND),
   YKienCSVC NVARCHAR(255),
-  TrangThai NVARCHAR(255) CHECK (TrangThai IN (N'Đang xem xét', N'Được phê duyệt', N'Không thông qua')),
+  --TrangThai NVARCHAR(255) CHECK (TrangThai IN (N'Đang xem xét', N'Được phê duyệt', N'Không thông qua')),
+  TrangThai NVARCHAR(255) CHECK (TrangThai IN (N'Trưởng khoa đã duyệt', N'Trưởng phòng CSVC đã duyệt', N'Ban giám hiệu đã duyệt',N'Không thông qua',N'Đang xem xét')),
   TongSoLoai int
 );
 CREATE TABLE ChiTietDeNghiMS (
