@@ -34,7 +34,13 @@ namespace ShoppingStationery.Controllers
         public IActionResult Create(int id)
         {
             ViewBag.MaPhieuSc = id;
-            ViewData["MaTb"] = new SelectList(_context.ThietBis, "MaTb", "TenTb");
+            var list=_context.ChiTietPhieuScs.ToList().Where(ct=>ct.MaPhieuSc==id).Select(ct => ct.MaTb)
+                   .ToList();
+            var tbs = _context.ThietBis.Where(ct => !list.Contains(ct.MaTb));
+            if(tbs.Any())
+                ViewData["MaTb"] = new SelectList(tbs, "MaTb", "TenTb");
+            else
+                ViewData["MaTb"] = new SelectList(new ArrayList(), "MaTb", "TenTb");
             return View();
         }
 

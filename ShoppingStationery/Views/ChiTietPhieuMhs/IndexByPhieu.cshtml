@@ -79,7 +79,7 @@
                         @Html.DisplayFor(modelItem => item.MaVppNavigation.TenVpp)
                     </td>
                     <td>
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        @Html.ActionLink("Delete", "Delete", new { maVPP = item.MaVppNavigation.MaVpp, maPhieu = item.MaPhieuMhNavigation.MaPhieuMh })
                     </td>
                 </tr>
             }

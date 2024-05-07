@@ -32,7 +32,9 @@ namespace ShoppingStationery.Controllers
         public IActionResult Create(int? id)
         {
             ViewBag.phieuId = id;
-            ViewData["MaVpp"] = new SelectList(_context.VanPhongPhams, "MaVpp", "TenVpp");
+            var existedVpps=_context.ChiTietPhieuMhs.Where(a => a.MaPhieuMh.Equals(id))
+                .Select(a=>a.MaVpp).ToList();
+            ViewData["MaVpp"] = new SelectList(_context.VanPhongPhams.Where(a=>!existedVpps.Contains(a.MaVpp)), "MaVpp", "TenVpp");
             return View();
         }
 
@@ -63,7 +65,7 @@ namespace ShoppingStationery.Controllers
                 _context.PhieuMuaHangs.Where(a => a.MaPhieuMh.Equals(chiTietPhieuMh.MaPhieuMh)).First().TongGiaTri
                     = _context.ChiTietPhieuMhs.Where(a => a.MaPhieuMh == chiTietPhieuMh.MaPhieuMh).Sum(a => a.DonGia * a.SoLuong);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("IndexByPhieu", "ChiTietPhieuMhs", new { id = maPhieu });
             }
            
             return RedirectToAction("IndexByPhieu", "ChiTietPhieuMhs", new { id = maPhieu });
