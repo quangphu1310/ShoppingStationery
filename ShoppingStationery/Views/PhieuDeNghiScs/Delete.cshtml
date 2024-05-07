@@ -1,0 +1,57 @@
+﻿@model ShoppingStationery.Models.PhieuDeNghiSc
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-white d-flex justify-content-center">
+                    <div>
+                        <h4 class="mb-0 text-white">Xóa phiếu đề nghị sửa chữa</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="text-center mb-4 tex">Bạn có chắc chắn muốn xóa phiếu này?</h5>
+                    <form asp-action="Delete">
+                        <div class="form-group">
+                            <label asp-for="MaDnsc" class="control-label">Mã phiếu đề nghị mua sắm</label>
+                            <input asp-for="MaDnsc" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="YkienCsvc" class="control-label">Ý kiến P.CSVC</label>
+                            <input asp-for="YkienCsvc" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NgayDeNghi" class="control-label">Ngày đề nghị</label>
+                            <input asp-for="NgayDeNghi" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TrangThai" class="control-label">Trạng thái</label>
+                            <input asp-for="TrangThai" class="form-control" readonly />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="TongSoLoai" class="control-label">Tổng số loại</label>
+                            <input asp-for="TongSoLoai" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            @if (TempData["ErrorMessage"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @TempData["ErrorMessage"]
+                                </div>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <a asp-action="Index" class="btn btn-secondary me-1 ml-1 float-start">Trở về danh sách</a>
+                            <input type="submit" value="Xóa" class="btn btn-danger text-white" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

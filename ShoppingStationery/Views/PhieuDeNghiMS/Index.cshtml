@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ShoppingStationery.Models.PhieuDeNghiM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string searchTerm = TempData["SearchTerm"] as string;
+}
+
+<div class="mx-2 my-2">
+    <h1 class="text-center mt-2">Danh sách phiếu đề nghị mua sắm văn phòng phẩm</h1>
+
+    <div class="d-flex justify-content-between">
+        <form asp-action="TimKiemPhieuDNMS" method="post" class="app-search-form">
+            <input type="text" placeholder="Tìm kiếm..." name="searchTerm" class="form-control search-input" value="@searchTerm">
+            <button type="submit" class="btn search-btn btn-primary" value="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+        <p>
+            <a asp-action="Create" class="btn btn-primary text-white">Thêm mới</a>
+        </p>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Mã DNMS</th>
+                        <th scope="col" class="text-center">Ý kiến P.CSVC</th>
+                        <th scope="col" class="text-center">Trạng thái</th>
+                        <th scope="col" class="text-center">Tổng số loại</th>
+                        <th scope="col" class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td align="center" class="text-center">@item.MaDnms</td>
+                            <td align="center" class="text-center">@item.YkienCsvc</td>
+                            <td align="center" class="text-center">@item.TrangThai</td>
+                            <td align="center" class="text-center">@item.TongSoLoai</td>
+                            <td align="center" class="text-center">
+                                <a class="btn btn-success text-white" asp-action="Edit" asp-route-id="@item.MaDnms">Sửa</a>
+                                <a class="btn btn-info text-white" asp-controller="ChiTietDeNghiMs" asp-action="Index" asp-route-idMaDnms="@item.MaDnms">Chi tiết phiếu đề nghị</a>
+                                <a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@item.MaDnms">Xoá</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            <div>
+                <a asp-action="Index" class="btn btn-secondary me-5 ml-2 float-start">Trở về danh sách</a>
+            </div>
+
+            <div style="text-align: center;"><p>Không tìm thấy kết quả phù hợp với từ khóa "@searchTerm".</p></div>
+        }
+        else
+        {
+            <div style="text-align: center;"><p>Hiện không có phiếu yêu cầu nào.</p></div>
+        }
+    }
+</div>

@@ -1,0 +1,58 @@
+﻿@model ShoppingStationery.Models.ChiTietDeNghiSc
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white d-flex justify-content-center">
+                    <div>
+                        <h4 class="mb-0 text-white">Chỉnh sửa phiếu đề nghị mua sắm</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div class="form-group">
+                            <label asp-for="MaDnsc" class="control-label">Mã đề nghị mua sắm</label>
+                            <input asp-for="MaDnsc" class="form-control" readonly />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="MaTbNavigation.TenTb" class="control-label">Thiết bị</label>
+                            <input asp-for="MaTbNavigation.TenTb" class="form-control" value="@TempData["TenTb"]" readonly />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Dvt" class="control-label">Đơn vị tính</label>
+                            <input asp-for="Dvt" class="form-control custom-select-extra-large" readonly />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="SoLuong" class="control-label">Số lượng</label>
+                            <input asp-for="SoLuong" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LyDo" class="control-label">Lý do</label>
+                            <input asp-for="LyDo" class="form-control" />
+                        </div>
+
+                        <div class="form-group d-flex justify-content-center mt-4">
+                            <input type="hidden" asp-for="MaTb" />
+                            <a asp-action="Index" asp-route-idMaDnsc="@TempData["IdMaDnsc"]" class="btn btn-secondary me-1 ml-1 float-start">Trở về danh sách</a>
+                            <input type="submit" value="Chỉnh sửa" class="btn btn-success text-white" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

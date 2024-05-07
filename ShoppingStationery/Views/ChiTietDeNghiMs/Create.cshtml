@@ -1,0 +1,74 @@
+﻿@model ShoppingStationery.Models.ChiTietDeNghiM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-center">
+                    <div>
+                        <h4 class="mb-0 text-white">Thêm mới chi tiết phiếu đề nghị mua sắm</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <input type="hidden" name="idMaDnms" value="@TempData["IdMaDnms"]" />
+                        <div class="form-group">
+                            <label asp-for="MaVpp" class="control-label">Văn phòng phẩm</label>
+                            <select asp-for="MaVpp" id="maVpp" class="form-control custom-select-extra-large" asp-items="ViewBag.MaVpp"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Dvt" class="control-label">Đơn vị tính</label>
+                            <input asp-for="Dvt" id="dvt" class="form-control" readonly/>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="SoLuong" class="control-label">Số lượng</label>
+                            <input asp-for="SoLuong" class="form-control" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label asp-for="Lydo" class="control-label">Lý do mua sắm</label>
+                            <input asp-for="Lydo" class="form-control" />
+                        </div>
+
+                        <div class="form-group d-flex justify-content-center mt-4">
+                            <a asp-action="Index" asp-route-idMaDnms="@TempData["IdMaDnms"]" class="btn btn-secondary me-1 ml-1 float-start">Trở về danh sách</a>
+                            <input type="submit" value="Thêm mới" class="btn btn-primary text-white" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var selectedVpp = document.getElementById("maVpp").value;
+
+        fetch('/ChiTietDeNghiMs/GetDvt?maVpp=' + selectedVpp)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("dvt").value = data;
+            });
+    });
+
+    document.getElementById("maVpp").addEventListener("change", function () {
+        var selectedVpp = this.value;
+        fetch('/ChiTietDeNghiMs/GetDvt?maVpp=' + selectedVpp)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("dvt").value = data;
+            });
+    });
+</script>

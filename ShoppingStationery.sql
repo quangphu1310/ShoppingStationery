@@ -8,8 +8,8 @@ go
 
 CREATE TABLE [VanPhongPham] (
   [MaVPP] int PRIMARY KEY,
-  [TenVPP] varchar(255),
-  [DonViTinh] varchar(50),
+  [TenVPP] nvarchar(255),
+  [DonViTinh] nvarchar(50),
   [DonGia] decimal(18,2),
   [TenNCC] nvarchar(255),
   [SDTNCC] varchar(20),
@@ -84,7 +84,6 @@ CREATE TABLE ChiTietDeNghiMS (
   TrangThai NVARCHAR(255) CHECK (TrangThai IN (N'Trưởng khoa đã duyệt', N'Trưởng phòng CSVC đã duyệt', N'Ban giám hiệu đã duyệt',N'Không thông qua',N'Đang xem xét')),
 
   TongSoLoai int
-
 );
  
 CREATE TABLE ChiTietDeNghiSC (
@@ -225,6 +224,9 @@ INSERT INTO NguoiDung ( HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
 VALUES 
 ( N'Người dùng 4', '123466789', 'user4@example.com', 1,null, 'bgh','1'),
 ( N'Người dùng 5', '987644321', 'user5@example.com', 5, 5, 'userketoan','1');
+INSERT INTO NguoiDung ( HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
+VALUES 
+( N'Người dùng 4', '123466789', 'user9@example.com', 1,null, 'bgh','phuochuan001@#')
 -- Thêm dữ liệu cho bảng ThietBi
 INSERT INTO ThietBi (MaTB, TenTB, LoaiTB, NamSuDung, MaDV)
 VALUES 
