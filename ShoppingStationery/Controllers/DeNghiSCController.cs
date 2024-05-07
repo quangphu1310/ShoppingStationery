@@ -14,7 +14,7 @@ namespace ShoppingStationery.Controllers
         {
 			_db = db;
         }
-		[UserAuthorization(1, 2, 3)]
+		[UserAuthorization(1, 2, 3,6)]
 		public IActionResult Index()
 		{
 			var listPhieuDNSC = _db.PhieuDeNghiScs.Include(x => x.MaNdNavigation).ToList();

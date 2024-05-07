@@ -195,14 +195,9 @@ VALUES
 (2, N'Trưởng khoa'),
 (3, N'Trưởng phòng CSVC'),
 (4, N'Nhân viên kỹ thuật'),
-(5, N'Nhân viên kế toán');
-
----- Thêm dữ liệu cho bảng TaiKhoan
---INSERT INTO TaiKhoan (MaTK, TaiKhoan, MatKhau, [Role])
---VALUES 
---(1, 'user1', 'password1', ''),
---(2, 'user2', 'password2', ''),
---(3, 'user3', 'password3', '');
+(5, N'Nhân viên kế toán'),
+(6, N'Quản trị viên'),
+(7, N'Người dùng');
 
 -- Thêm dữ liệu cho bảng DonVi
 INSERT INTO DonVi (MaDV, TenD)
@@ -211,23 +206,26 @@ VALUES
 (2, N'Khoa điện'),
 (3, N'Khoa xây dựng'),
 (4, N'Phòng CSVC'),
-(5, N'Phòng KHTC')
-;
+(5, N'Phòng KHTC'),
+(6, N'Quản trị hệ thống'),
+(7, N'Ban giám hiệu');
 
 -- Thêm dữ liệu cho bảng NguoiDung
 INSERT INTO NguoiDung ( HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
 VALUES 
-( N'Người dùng 1', '123456789', 'user1@example.com', 2, 1, 'user1','pw1'),
-( N'Người dùng 2', '987654321', 'user2@example.com', 3, 4, 'user2','pw2'),
-( N'Người dùng 3', '0987654321', 'user3@example.com', 4, 5, 'user3','pw3');
+( N'Trưởng khoa', '123456789', 'user1@example.com', 2, 1, 'user1','pw1'),
+( N'Trưởng phòng CSVC', '987654321', 'user2@example.com', 3, 4, 'user2','pw2'),
+( N'NVKT', '0987654321', 'user3@example.com', 4, 5, 'user3','pw3'),
+( N'Quản trị viên', '123456789', 'qtv@example.com', 6, 6, 'qtv','1'),
+( N'Người dùng ', '987654321', 'nguoidung@example.com', 7, 1, 'nguoidung','1')
 -- Thêm dữ liệu cho bảng NguoiDung
 INSERT INTO NguoiDung ( HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
 VALUES 
-( N'Người dùng 4', '123466789', 'user4@example.com', 1,null, 'bgh','1'),
+( N'Người dùng 4', '123466789', 'user4@example.com', 1,7, 'bgh','1'),
 ( N'Người dùng 5', '987644321', 'user5@example.com', 5, 5, 'userketoan','1');
 INSERT INTO NguoiDung ( HoTen, SDT, Email, MaCV, MaDV, TaiKhoan, MatKhau)
 VALUES 
-( N'Người dùng 4', '123466789', 'user9@example.com', 1,null, 'bgh','phuochuan001@#')
+( N'Người dùng 6', '123466789', 'user9@example.com', 1,7, 'bgh','phuochuan001@#')
 -- Thêm dữ liệu cho bảng ThietBi
 INSERT INTO ThietBi (MaTB, TenTB, LoaiTB, NamSuDung, MaDV)
 VALUES 
