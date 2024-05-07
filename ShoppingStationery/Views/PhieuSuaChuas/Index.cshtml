@@ -58,6 +58,18 @@
         text-align: center; /* Center the contents of the div */
     }
 
+    .td_center--btn {
+        text-align: center;
+    }
+
+    .td_btn_border {
+        /* border: 1px solid black !important; /* Màu sắc và độ dày của đường viền */ */
+        padding: 5px 10px !important; /* Khoảng cách từ nội dung đến viền */
+        text-decoration: none !important; /* Loại bỏ gạch chân mặc định */
+        color: black !important; /* Màu sắc của chữ */
+    }
+
+
 </style>
 
 
@@ -138,9 +150,19 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.MaNdNavigation.HoTen)
                                         </td>
-                                        <td>
-                                            <a asp-controller="ChiTietPhieuScs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuSc">Cập nhật chi tiết</a> 
+                                        <td class="td_center--btn">
+                                            <a asp-controller="ChiTietPhieuScs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuSc">Cập nhật chi tiết </a> 
+                                            @{
+                                                if (item.TrangThai.Equals("Chưa hoàn thành"))
+                                                {
+                                                    <a class="td_btn_border">|</a>
+                                                    <a asp-controller="PhieuSuaChuas" asp-action="HoanThanh" asp-route-id="@item.MaPhieuSc"> Hoàn thành </a>
+                                                    <a class="td_btn_border">|</a>
+                                                    <a asp-controller="PhieuSuaChuas" asp-action="Huy" asp-route-id="@item.MaPhieuSc">| Hủy</a>
+                                                }
+                                            }
                                         </td>
+
                                     </tr>
                                 }
                             </tbody>

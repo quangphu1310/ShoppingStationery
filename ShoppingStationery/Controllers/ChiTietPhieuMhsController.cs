@@ -24,6 +24,7 @@ namespace ShoppingStationery.Controllers
         // GET: ChiTietPhieuMhs/IndexByPhieu
         public async Task<IActionResult> IndexByPhieu(int? id)
         {
+
             ViewBag.phieuId = id;
             var stationeryShoppingContext = _context.ChiTietPhieuMhs.Where(a => a.MaPhieuMh.Equals(id)).Include(c => c.MaPhieuMhNavigation).Include(c => c.MaVppNavigation);
             return View(await stationeryShoppingContext.ToListAsync());
@@ -31,6 +32,9 @@ namespace ShoppingStationery.Controllers
 
         public IActionResult Create(int? id)
         {
+            if (!(_context.PhieuMuaHangs.Where(a => a.MaPhieuMh == id).First()
+                .TrangThai == "Chưa thanh toán"))
+                 return RedirectToAction("IndexByPhieu", "ChiTietPhieuMhs", new { id = id });
             ViewBag.phieuId = id;
             var existedVpps=_context.ChiTietPhieuMhs.Where(a => a.MaPhieuMh.Equals(id))
                 .Select(a=>a.MaVpp).ToList();

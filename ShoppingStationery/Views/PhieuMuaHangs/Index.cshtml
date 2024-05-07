@@ -141,7 +141,16 @@
                                             @Html.DisplayFor(modelItem => item.MaNdNavigation.HoTen)
                                         </td>
                                         <td>
-                                            <a asp-controller="ChiTietPhieuMhs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuMh">Cập nhật chi tiết</a> 
+                                            <a asp-controller="ChiTietPhieuMhs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuMh">Cập nhật chi tiết</a>
+                                            @{
+                                                if (item.TrangThai.Equals("Chưa thanh toán"))
+                                                {
+                                                    <a class="td_btn_border">|</a>
+                                                    <a asp-controller="PhieuMuaHangs" asp-action="ThanhToan" asp-route-id="@item.MaPhieuMh"> Hoàn thành </a>
+                                                    <a class="td_btn_border">|</a>
+                                                    <a asp-controller="PhieuMuaHangs" asp-action="Huy" asp-route-id="@item.MaPhieuMh">| Hủy</a>
+                                                }
+                                            }
                                         </td>
                                     </tr>
                                 }

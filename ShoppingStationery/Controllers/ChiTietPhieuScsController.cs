@@ -33,6 +33,10 @@ namespace ShoppingStationery.Controllers
        
         public IActionResult Create(int id)
         {
+            if (!(_context.PhieuSuaChuas.Where(p => p.MaPhieuSc == id).First().TrangThai == "Chưa hoàn thành"))
+            {
+                return RedirectToAction("IndexByPhieu", "ChiTietPhieuScs", new { id = id });
+            }
             ViewBag.MaPhieuSc = id;
             var list=_context.ChiTietPhieuScs.ToList().Where(ct=>ct.MaPhieuSc==id).Select(ct => ct.MaTb)
                    .ToList();

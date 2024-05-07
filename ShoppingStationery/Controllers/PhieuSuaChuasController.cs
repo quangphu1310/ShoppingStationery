@@ -186,5 +186,23 @@ namespace ShoppingStationery.Controllers
         {
             return _context.PhieuSuaChuas.Any(e => e.MaPhieuSc == id);
         }
+
+
+
+        public async Task<IActionResult> HoanThanh(int id)
+        {
+            _context.PhieuSuaChuas.Where(p => p.MaPhieuSc == id).First()
+                .TrangThai = "Đã hoàn thành";
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Huy(int id)
+        {
+            _context.PhieuSuaChuas.Where(p => p.MaPhieuSc == id).First()
+                .TrangThai = "Đã bị huỹ";
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
