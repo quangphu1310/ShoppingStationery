@@ -101,6 +101,7 @@ namespace ShoppingStationery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int idMaDnms, [Bind("MaVpp,Dvt,SoLuong,Lydo")] ChiTietDeNghiM chiTietDeNghiM)
         {
+            Console.WriteLine("MaDNMS: " + idMaDnms);
             if (ModelState.IsValid)
             {
                 var existingChiTiet = await _context.ChiTietDeNghiMs
@@ -119,6 +120,19 @@ namespace ShoppingStationery.Controllers
                     chiTietDeNghiM.MaDnms = idMaDnms;
                     _context.Add(chiTietDeNghiM);
                 }
+                await _context.SaveChangesAsync();
+
+                var numberOfLines = await _context.ChiTietDeNghiMs
+                    .Where(c => c.MaDnms == idMaDnms)
+                    .CountAsync();
+
+                var phieuDeNghi = await _context.PhieuDeNghiMs.FindAsync(idMaDnms);
+                if (phieuDeNghi != null)
+                {
+                    phieuDeNghi.TongSoLoai = numberOfLines;
+                    _context.Update(phieuDeNghi);
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", new { idMaDnms });
             }
@@ -215,6 +229,18 @@ namespace ShoppingStationery.Controllers
             if (chiTietDeNghiM != null)
             {
                 _context.ChiTietDeNghiMs.Remove(chiTietDeNghiM);
+                await _context.SaveChangesAsync();
+
+                var numberOfLines = await _context.ChiTietDeNghiMs
+                    .Where(c => c.MaDnms == idMaDnms)
+                    .CountAsync();
+
+                var phieuDeNghi = await _context.PhieuDeNghiMs.FindAsync(idMaDnms);
+                if (phieuDeNghi != null)
+                {
+                    phieuDeNghi.TongSoLoai = numberOfLines;
+                    _context.Update(phieuDeNghi);
+                }
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("Index", new { idMaDnms });
