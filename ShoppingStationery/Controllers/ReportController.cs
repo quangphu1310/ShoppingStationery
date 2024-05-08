@@ -4,7 +4,8 @@ using ShoppingStationery.Models;
 
 namespace ShoppingStationery.Controllers
 {
-	public class ReportController : Controller
+    [AuthorizeUser]
+    public class ReportController : Controller
 	{
 		public StationeryShoppingContext _db;
 		public ReportController(StationeryShoppingContext db)

@@ -14,7 +14,8 @@ namespace ShoppingStationery.Controllers
 {
 
 	[AuthorizeUser]
-	public class NguoiDungController : Controller
+    [UserAuthorization(6)]
+    public class NguoiDungController : Controller
     {
         private readonly StationeryShoppingContext _context;
 
@@ -124,7 +125,7 @@ namespace ShoppingStationery.Controllers
             return View(nguoiDung);
         }
 
-        [UserAuthorization(1,4)]		
+        		
 		// GET: NguoiDung/Create
 		public IActionResult Create()
         {
@@ -132,7 +133,7 @@ namespace ShoppingStationery.Controllers
             ViewData["MaDv"] = new SelectList(_context.DonVis, "MaDv", "TenD");
             return View();
         }
-		[UserAuthorization(1, 4)]
+		
 		// POST: NguoiDung/Create
 		// To protect from overposting attacks, enable the specific properties you want to bind to.
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
