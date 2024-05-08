@@ -125,13 +125,6 @@ namespace ShoppingStationery.Controllers
             {
                 return NotFound();
             }
-            var trangThaiList = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "Đang xem xét", Text = "Đang xem xét" },
-                new SelectListItem { Value = "Được phê duyệt", Text = "Được phê duyệt" },
-                new SelectListItem { Value = "Không thông qua", Text = "Không thông qua" }
-            };
-            ViewBag.TrangThai = trangThaiList;
             return View(phieuDeNghiSc);
         }
 

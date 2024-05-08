@@ -112,6 +112,18 @@ namespace ShoppingStationery.Controllers
                     _context.Add(chiTietDeNghiSc);
                 }
                 await _context.SaveChangesAsync();
+
+                var numberOfLines = await _context.ChiTietDeNghiMs
+                    .Where(c => c.MaDnms == idMaDnsc)
+                    .CountAsync();
+
+                var phieuDeNghi = await _context.PhieuDeNghiMs.FindAsync(idMaDnsc);
+                if (phieuDeNghi != null)
+                {
+                    phieuDeNghi.TongSoLoai = numberOfLines;
+                    _context.Update(phieuDeNghi);
+                }
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Index", new { idMaDnsc });
             }
             ViewData["MaDnsc"] = new SelectList(_context.PhieuDeNghiScs, "MaDnsc", "MaDnsc", chiTietDeNghiSc.MaDnsc);
@@ -206,6 +218,18 @@ namespace ShoppingStationery.Controllers
             if (chiTietDeNghiSc != null)
             {
                 _context.ChiTietDeNghiMs.Remove(chiTietDeNghiSc);
+                await _context.SaveChangesAsync();
+
+                var numberOfLines = await _context.ChiTietDeNghiMs
+                    .Where(c => c.MaDnms == idMaDnsc)
+                    .CountAsync();
+
+                var phieuDeNghi = await _context.PhieuDeNghiMs.FindAsync(idMaDnsc);
+                if (phieuDeNghi != null)
+                {
+                    phieuDeNghi.TongSoLoai = numberOfLines;
+                    _context.Update(phieuDeNghi);
+                }
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("Index", new { idMaDnsc });

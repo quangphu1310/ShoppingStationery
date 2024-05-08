@@ -23,31 +23,12 @@
 
                         <div class="form-group">
                             <label asp-for="TrangThai" class="control-label">Trạng thái</label>
-                            @using Newtonsoft.Json;
-                            @{
-                                var userSession = Context.Session.GetString("User");
-                                if (userSession != null)
-                                {
-                                    var user = JsonConvert.DeserializeObject<NguoiDung>(userSession);
-                                    if (user.MaCv != 1 && user.MaCv != 4)
-                                    {
-                                        <input asp-for="TrangThai" class="form-control" readonly />
-                                    }
-                                    else
-                                    {
-                                        <select asp-for="TrangThai" class="form-control custom-select-extra-large" asp-items="ViewBag.TrangThai"></select>
-                                    }
-                                }
-                                else
-                                {
-                                    <input asp-for="TrangThai" class="form-control" readonly />
-                                }
-                            }
+                            <input asp-for="TrangThai" class="form-control" readonly />
                         </div>
 
                         <div class="form-group">
                             <label asp-for="TongSoLoai" class="control-label">Tổng số loại</label>
-                            <input asp-for="TongSoLoai" class="form-control" />
+                            <input asp-for="TongSoLoai" class="form-control" readonly />
                         </div>
 
                         <div class="form-group d-flex justify-content-center mt-4">
