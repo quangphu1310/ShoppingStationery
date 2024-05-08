@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingStationery.Models;
+using System.Data;
+using System;
+using ClosedXML.Excel;
 
 namespace ShoppingStationery.Controllers
 {
@@ -12,11 +15,14 @@ namespace ShoppingStationery.Controllers
 		{
 			_db = db;
 		}
-		//[HttpPost]
-		public IActionResult Index(string? loai, int? donVi, DateOnly? dateStart, DateOnly? dateEnd)
+        //[HttpPost]
+        public static List<PhieuMuaHang> list1 = new List<PhieuMuaHang>();
+        public static List<PhieuSuaChua> list2 = new List<PhieuSuaChua>();
+        static decimal? sumCostMH = 0;
+        static decimal? sumCostSC = 0;
+        public IActionResult Index(string? loai, int? donVi, DateOnly? dateStart, DateOnly? dateEnd)
 		{
-			decimal? sumCostMH = 0;
-			decimal? sumCostSC = 0;
+			
 			foreach( var item in _db.PhieuMuaHangs)
 			{
 				sumCostMH += item.TongGiaTri;
@@ -32,8 +38,7 @@ namespace ShoppingStationery.Controllers
 			ViewBag.sumCostSC = sumCostSC;
 			ViewBag.loai = loai;
 
-			List<PhieuMuaHang> list1 = new List<PhieuMuaHang>();
-			List<PhieuSuaChua> list2 = new List<PhieuSuaChua>();
+			
             if(dateStart == null)
 			{
                 dateStart = new DateOnly(2000, 1, 1);
@@ -63,10 +68,53 @@ namespace ShoppingStationery.Controllers
 
             return View();
 		}
-        public IActionResult Print()
-		{
-			//comming soon
-            return Ok();
-		}
-	}
+
+        [HttpGet]
+        public async Task<FileResult> Print()
+        {
+            var people = await _db.PhieuMuaHangs.ToListAsync();
+            var fileName = "baocaochiphi.xlsx";
+            return GenerateExcel(fileName, people);
+        }
+
+        private FileResult GenerateExcel(string fileName, IEnumerable<PhieuMuaHang> people)
+        {
+            DataTable dataTable = new DataTable("Report");
+            
+            dataTable.Columns.AddRange(new DataColumn[]
+            {
+                new DataColumn("Mã phiếu"),
+                new DataColumn("Ngày lập"),
+                new DataColumn("Trạng thái"),
+                new DataColumn("Ghi chú"),
+                new DataColumn("Đơn vị sử dụng"),
+                new DataColumn("Tổng giá trị")
+            });
+
+            foreach (var person in list1)
+            {
+                dataTable.Rows.Add(person.MaPhieuMh, person.NgayLap, person.TrangThai, person.GhiChu, person.MaDvNavigation.TenD, person.TongGiaTri);
+            }
+            dataTable.Rows.Add("Tổng", "", "", "", "", sumCostMH);
+            foreach (var person in list2)
+            {
+                dataTable.Rows.Add(person.MaPhieuSc, person.NgayLap, person.TrangThai, person.GhiChu, person.MaDvNavigation.TenD, person.TongGiaTri);
+            }
+            dataTable.Rows.Add("Tổng", "", "", "", "", sumCostSC);
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dataTable);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+
+                    return File(stream.ToArray(),
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        fileName);
+                }
+            }
+
+        }
+    }
 }

@@ -58,7 +58,7 @@
             </div>
             <div class="row mt-2">
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary">Lọc</button>
+                    <button type="submit" class="btn btn-info">Lọc</button>
                 </div>
             </div>
         </form>
@@ -188,6 +188,10 @@
                 </tbody>
             </table>
         }
-        @* <a type="button" asp-action="Print" class="btn btn-info">In Kết Quả</a> *@
+        @if(ViewBag.loai != null)
+        {
+            <a type="button" asp-action="Print" class="btn btn-success">Xuất báo cáo</a>
+
+        }
     </div>
 </div>
