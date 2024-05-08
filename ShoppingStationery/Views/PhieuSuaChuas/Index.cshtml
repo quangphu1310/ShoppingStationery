@@ -163,7 +163,14 @@
                                             @Html.DisplayFor(modelItem => item.MaNdNavigation.HoTen)
                                         </td>
                                         <td class="td_center--btn">
-                                            <a asp-controller="ChiTietPhieuScs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuSc">Cập nhật chi tiết </a>
+                                            @if (ls.Contains(user.MaCv.Value))
+                                            {
+                                                <a asp-controller="ChiTietPhieuScs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuSc">Cập nhật chi tiết </a>
+                                            }
+                                            @if (!ls.Contains(user.MaCv.Value))
+                                            {
+                                                <a asp-controller="ChiTietPhieuScs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuSc">Chi tiết </a>
+                                            }
                                             @{
                                                 if (item.TrangThai.Equals("Chưa hoàn thành") && ls.Contains(user.MaCv.Value))
                                                 {

@@ -78,7 +78,6 @@
         text-align: center;
     }
 
-
 </style>
 
 
@@ -161,8 +160,14 @@
                                         </td>
                                         <td>
                                             <div class="addtion-btn">
-                                                
-                                                <a asp-controller="ChiTietPhieuMhs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuMh">Cập nhật chi tiết</a>
+                                                @if (ls.Contains(user.MaCv.Value))
+                                                {
+                                                    <a asp-controller="ChiTietPhieuMhs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuMh">Cập nhật chi tiết</a>
+                                                }
+                                                @if (!ls.Contains(user.MaCv.Value))
+                                                {
+                                                    <a asp-controller="ChiTietPhieuMhs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuMh">Chi tiết</a>
+                                                }
                                                 @{
                                                     if (item.TrangThai.Equals("Chưa thanh toán") && ls.Contains(user.MaCv.Value))
                                                     {
