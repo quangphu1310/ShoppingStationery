@@ -257,8 +257,8 @@ VALUES
 INSERT INTO PhieuDeNghiMS (MaDNMS, YKienCSVC, TrangThai, MaND,TongSoLoai)
 VALUES 
 (1, N'Yêu cầu mua thêm bút bi đỏ', N'Đang xem xét',2, 1),
-(2, N'Yêu cầu mua thêm giấy A3', N'Đang xem xét',1, 2),
-(3, N'Yêu cầu mua thêm bút chì màu', N'Đang xem xét',2, 3);
+(2, N'Yêu cầu mua thêm giấy A3', N'Đang xem xét',1, 1),
+(3, N'Yêu cầu mua thêm bút chì màu', N'Đang xem xét',2, 1);
 
 -- Thêm dữ liệu cho bảng PhieuSuaChua
 INSERT INTO PhieuSuaChua (MaPhieuSC, NgayLap, TongGiaTri, TrangThai, GhiChu, MaND, MaDV)
@@ -284,11 +284,11 @@ VALUES
 (3, 3, N'Tờ', 200, N'Cần mua dự trữ');
 
 -- Thêm dữ liệu cho bảng PhieuDeNghiSC
-INSERT INTO PhieuDeNghiSC (MaDNSC, YKienCSVC, NgayDeNghi, TrangThai, MaND,TongSoLoai)
+INSERT INTO PhieuDeNghiSC (MaDNSC, YKienCSVC, NgayDeNghi, TrangThai, MaND, TongSoLoai)
 VALUES 
-(1, N'Yêu cầu sửa chữa máy in', '2024-04-10', N'Trưởng khoa đã duyệt', 1,1),
-(2, N'Yêu cầu bảo dưỡng máy tính', '2024-04-11', N'Trưởng phòng CSVC đã duyệt', 3,2),
-(3, N'Yêu cầu thay thế linh kiện máy chiếu', '2024-04-12', N'Trưởng khoa đã duyệt',2 ,3);
+(1, N'Yêu cầu sửa chữa máy in', '2024-04-10', N'Trưởng khoa đã duyệt', 1, 2),
+(2, N'Yêu cầu bảo dưỡng máy tính', '2024-04-11', N'Trưởng phòng CSVC đã duyệt', 3, 1),
+(3, N'Yêu cầu thay thế linh kiện máy chiếu', '2024-04-12', N'Trưởng khoa đã duyệt', 2, 2);
 INSERT INTO ChiTietDeNghiSC (MaDNSC, MaTB, DVT, SoLuong, LyDo)
 VALUES 
 (1, 1, N'Cái', 10, N'Đang hỏng'),
@@ -300,16 +300,16 @@ VALUES
 -- Thêm dữ liệu cho bảng PhieuDeNghiSC
 INSERT INTO PhieuDeNghiSC (MaDNSC, YKienCSVC, NgayDeNghi, TrangThai, MaND, TongSoLoai)
 VALUES 
-(4, N'Yêu cầu sửa chữa máy tính xách tay', '2024-04-10', N'Đang xem xét', 2, 1),
-(5, N'Yêu cầu mua thêm giấy A4', '2024-04-11', N'Đang xem xét', 3, 2),
-(6, N'Yêu cầu thay đổi linh kiện máy chiếu', '2024-04-12', N'Đang xem xét', 1, 3),
-(7, N'Yêu cầu bảo dưỡng máy tính để bàn', '2024-04-13', N'Đang xem xét', 2, 1),
-(8, N'Yêu cầu mua thêm bút chì màu', '2024-04-14', N'Đang xem xét', 3, 2),
-(9, N'Yêu cầu sửa chữa máy in màu', '2024-04-15', N'Đang xem xét', 1, 3),
-(10, N'Yêu cầu mua thêm giấy A3', '2024-04-16', N'Đang xem xét', 2, 1),
-(11, N'Yêu cầu thay đổi linh kiện máy tính xách tay', '2024-04-17', N'Đang xem xét', 3, 2),
-(12, N'Yêu cầu bảo dưỡng máy chiếu', '2024-04-18', N'Đang xem xét', 1, 3),
-(13, N'Yêu cầu sửa chữa máy in', '2024-04-19', N'Đang xem xét', 2, 1);
+(4, N'Yêu cầu sửa chữa máy tính xách tay', '2024-04-10', N'Đang xem xét', 2, 2),
+(5, N'Yêu cầu mua thêm giấy A4', '2024-04-11', N'Đang xem xét', 3, 1),
+(6, N'Yêu cầu thay đổi linh kiện máy chiếu', '2024-04-12', N'Đang xem xét', 1, 2),
+(7, N'Yêu cầu bảo dưỡng máy tính để bàn', '2024-04-13', N'Đang xem xét', 2, 2),
+(8, N'Yêu cầu mua thêm bút chì màu', '2024-04-14', N'Đang xem xét', 3, 1),
+(9, N'Yêu cầu sửa chữa máy in màu', '2024-04-15', N'Đang xem xét', 1, 2),
+(10, N'Yêu cầu mua thêm giấy A3', '2024-04-16', N'Đang xem xét', 2, 0),
+(11, N'Yêu cầu thay đổi linh kiện máy tính xách tay', '2024-04-17', N'Đang xem xét', 3, 0),
+(12, N'Yêu cầu bảo dưỡng máy chiếu', '2024-04-18', N'Đang xem xét', 1, 0),
+(13, N'Yêu cầu sửa chữa máy in', '2024-04-19', N'Đang xem xét', 2, 0);
 
 -- Thêm dữ liệu cho bảng ChiTietDeNghiSC
 INSERT INTO ChiTietDeNghiSC (MaDNSC, MaTB, DVT, SoLuong, LyDo)
