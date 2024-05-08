@@ -24,8 +24,12 @@ namespace ShoppingStationery.Controllers
         // GET: ChiTietPhieuMhs/IndexByPhieu
         public async Task<IActionResult> IndexByPhieu(int? id)
         {
-
+            ViewBag.trangthai = _context.PhieuMuaHangs.Where(ct => ct.MaPhieuMh.Equals(id)).First().TrangThai;
             ViewBag.phieuId = id;
+            var existedVpps = _context.ChiTietPhieuMhs.Where(a => a.MaPhieuMh.Equals(id))
+                .Select(a => a.MaVpp).ToList();
+            var ls = _context.VanPhongPhams.Where(a => !existedVpps.Contains(a.MaVpp));
+            ViewBag.createSatus = ls.Count() > 0 ? 1 : 0;
             var stationeryShoppingContext = _context.ChiTietPhieuMhs.Where(a => a.MaPhieuMh.Equals(id)).Include(c => c.MaPhieuMhNavigation).Include(c => c.MaVppNavigation);
             return View(await stationeryShoppingContext.ToListAsync());
         }
@@ -36,6 +40,7 @@ namespace ShoppingStationery.Controllers
                 .TrangThai == "Chưa thanh toán"))
                  return RedirectToAction("IndexByPhieu", "ChiTietPhieuMhs", new { id = id });
             ViewBag.phieuId = id;
+           
             var existedVpps=_context.ChiTietPhieuMhs.Where(a => a.MaPhieuMh.Equals(id))
                 .Select(a=>a.MaVpp).ToList();
             ViewData["MaVpp"] = new SelectList(_context.VanPhongPhams.Where(a=>!existedVpps.Contains(a.MaVpp)), "MaVpp", "TenVpp");
@@ -48,7 +53,8 @@ namespace ShoppingStationery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MaPhieuMh,MaVpp,SoLuong,DonGia,GhiChu")] ChiTietPhieuMh chiTietPhieuMh)
         {
-            _context.Add(chiTietPhieuMh);
+            var mh = new ChiTietPhieuMh(chiTietPhieuMh.MaPhieuMh, chiTietPhieuMh.MaVpp, chiTietPhieuMh.SoLuong, chiTietPhieuMh.DonGia, chiTietPhieuMh.GhiChu);
+            _context.Add(mh);
             await _context.SaveChangesAsync();
             _context.PhieuMuaHangs.Where(a => a.MaPhieuMh.Equals(chiTietPhieuMh.MaPhieuMh)).First().TongGiaTri
                 = _context.ChiTietPhieuMhs.Where(a => a.MaPhieuMh == chiTietPhieuMh.MaPhieuMh).Sum(a => a.DonGia * a.SoLuong);

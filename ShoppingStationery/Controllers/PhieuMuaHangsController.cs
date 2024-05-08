@@ -25,14 +25,14 @@ namespace ShoppingStationery.Controllers
         // GET: PhieuMuaHangs
         public async Task<IActionResult> Index()
         {
-			
-			ViewData["DVDV"] = new SelectList(_context.DonVis, "MaDv", "TenD");
 
-			var stationeryShoppingContext = _context.PhieuMuaHangs.Include(p => p.MaDvNavigation).Include(p => p.MaNdNavigation);
+            ViewData["DVDV"] = new SelectList(_context.DonVis, "MaDv", "TenD");
+
+            var stationeryShoppingContext = _context.PhieuMuaHangs.Include(p => p.MaDvNavigation).Include(p => p.MaNdNavigation);
             return View(await stationeryShoppingContext.ToListAsync());
         }
 
-       
+
 
 
         [HttpPost]
@@ -43,7 +43,7 @@ namespace ShoppingStationery.Controllers
             string maDV = form["MaDv"];
             var UserID = form["UserID"];
 
-            int id = phieuMuaHangServie.createPhieuMuaHang(ghiChu, maDV, UserID);
+            int id = phieuMuaHangServie.createDefPhieuMuaHang(ghiChu, maDV, UserID);
             ViewBag.phieuSuaChuaId = id;
             return RedirectToAction(nameof(Index));
         }
@@ -72,5 +72,15 @@ namespace ShoppingStationery.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+
+
+        public async Task<IActionResult> TaoPhieu(int id)
+        {
+            _context.PhieuMuaHangs.Where(a => a.MaPhieuMh == id).First()
+               .TrangThai = "Chưa thanh toán";
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
+
 }

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ShoppingStationery.Models;
 using ShoppingStationery.Service;
 
@@ -15,6 +18,7 @@ namespace ShoppingStationery.Controllers
     {
         private readonly PhieuSuaChuaService phieuSuaChuaService;
         private readonly StationeryShoppingContext _context;
+        //private readonly ActionExecutingContext context;
 
         public PhieuSuaChuasController(StationeryShoppingContext context)
         {
@@ -25,6 +29,8 @@ namespace ShoppingStationery.Controllers
         // GET: PhieuSuaChuas
         public async Task<IActionResult> Index()
         {
+
+
             ViewData["MaDv"] = new SelectList(_context.DonVis, "MaDv", "MaDv");
             ViewData["MaNd"] = new SelectList(_context.NguoiDungs, "MaNd", "MaNd");
             ViewData["DVDV"] = new SelectList(_context.DonVis.ToList(), "MaDv", "TenD");
@@ -204,5 +210,13 @@ namespace ShoppingStationery.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> KhoiTao(int id)
+        {
+            _context.PhieuSuaChuas.Where(p => p.MaPhieuSc == id).First()
+                .TrangThai = "Chưa hoàn thành";
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+        
     }
 }

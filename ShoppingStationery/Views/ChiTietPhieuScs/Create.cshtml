@@ -55,6 +55,60 @@
     .form-main {
         a text-align: center;
     }
+    /* Custom CSS for form styling */
+    .form-main {
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    /* Enhanced CSS for form title */
+    .form-title {
+        font-size: 32px;
+        font-weight: bold;
+        color: #333; /* Darker color for better contrast */
+        margin-bottom: 30px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        border-bottom: 2px solid #007bff; /* Add a border bottom for emphasis */
+        padding-bottom: 10px; /* Add some padding at the bottom */
+        transition: color 0.3s ease; /* Smooth transition for color change */
+    }
+
+        /* Hover effect for form title */
+        .form-title:hover {
+            color: #007bff; /* Change color on hover */
+        }
+
 
 
 </style>
@@ -70,28 +124,30 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Create" class="form-main">
+            <h2 class="form-title">Lập chi tiết phiếu sửa chữa</h2>
+
+            <form asp-action="Create" class="form-main" >
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="MaPhieuSc" class="control-label"></label>
+                    <label asp-for="MaPhieuSc" class="control-label"> Mã phiếu</label>
                     <input asp-for="MaPhieuSc" class="form-control" value="@ViewBag.MaPhieuSc"></input>
                 </div>
                 <div class="form-group">
-                    <label asp-for="MaTb" class="control-label"></label>
-                    <select asp-for="MaTb" class="form-control" asp-items="ViewBag.MaTb"></select>
+                    <label asp-for="MaTb" class="control-label">Thiết bị</label>
+                    <select asp-for="MaTb" class="form-control" asp-items="ViewBag.MaTb"> </select>
                 </div>
                 <div class="form-group">
-                    <label asp-for="NoiDung" class="control-label"></label>
+                    <label asp-for="NoiDung" class="control-label">Nội dung</label>
                     <input asp-for="NoiDung" class="form-control" />
                     <span asp-validation-for="NoiDung" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ChiPhi" class="control-label"></label>
+                    <label asp-for="ChiPhi" class="control-label">Chi phí</label>
                     <input asp-for="ChiPhi" class="form-control" />
                     <span asp-validation-for="ChiPhi" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="GhiChu" class="control-label"></label>
+                    <label asp-for="GhiChu" class="control-label">Ghi chú</label>
                     <input asp-for="GhiChu" class="form-control" />
                     <span asp-validation-for="GhiChu" class="text-danger"></span>
                 </div>
