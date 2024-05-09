@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingStationery.Models;
+using ShoppingStationery.Service;
 
 namespace ShoppingStationery.Controllers
 {
@@ -9,10 +10,12 @@ namespace ShoppingStationery.Controllers
 
 	{
 		public StationeryShoppingContext _db;
+		private readonly PhieuSuaChuaService phieuSuaChuaService;
 
 		public DeNghiSCController(StationeryShoppingContext db)
         {
 			_db = db;
+            phieuSuaChuaService=new PhieuSuaChuaService(db);
         }
 		[UserAuthorization(1, 2, 3,6)]
 		public IActionResult Index()
@@ -50,6 +53,8 @@ namespace ShoppingStationery.Controllers
 				phieuDNSC.TrangThai = "Ban giám hiệu đã duyệt";
 			}
 			_db.SaveChanges();
+			if (phieuDNSC.TrangThai == "Ban giám hiệu đã duyệt")
+				phieuSuaChuaService.createPhieuSuaChua(phieuDNSC);
             return RedirectToAction("Index");
         }
 		public IActionResult Cancel(int? id)

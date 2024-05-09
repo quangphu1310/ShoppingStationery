@@ -18,4 +18,18 @@ public partial class ChiTietPhieuSc
     public virtual PhieuSuaChua MaPhieuScNavigation { get; set; } = null!;
 
     public virtual ThietBi MaTbNavigation { get; set; } = null!;
+
+    public ChiTietPhieuSc(int maPhieuSc, int maTb, string? noiDung, decimal? chiPhi, string? ghiChu)
+    {
+        MaPhieuSc = maPhieuSc;
+        MaTb = maTb;
+        NoiDung = noiDung;
+        ChiPhi = chiPhi;
+        GhiChu = ghiChu;
+    }
+
+    public ChiTietPhieuSc()
+    {
+       
+    }
 }

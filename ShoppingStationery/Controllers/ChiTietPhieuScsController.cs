@@ -26,7 +26,12 @@ namespace ShoppingStationery.Controllers
         public async Task<IActionResult> IndexByPhieu(int? id)
         {
             ViewBag.PhieuId = id;
+            ViewBag.trangthai = _context.PhieuSuaChuas.Where(ct => ct.MaPhieuSc.Equals(id)).First().TrangThai;
             var stationeryShoppingContext = _context.ChiTietPhieuScs.Where(ct => ct.MaPhieuSc.Equals(id)).Include(c => c.MaPhieuScNavigation).Include(c => c.MaTbNavigation);
+            var list = _context.ChiTietPhieuScs.ToList().Where(ct => ct.MaPhieuSc == id).Select(ct => ct.MaTb)
+                   .ToList();
+            var tbs = _context.ThietBis.Where(ct => !list.Contains(ct.MaTb));
+            ViewBag.createSatus = tbs.Count() > 0 ? 1: 0;
             return View(await stationeryShoppingContext.ToListAsync());
         }
 

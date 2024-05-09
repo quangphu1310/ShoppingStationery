@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ShoppingStationery.Models.ChiTietPhieuSc>
+﻿@using Newtonsoft.Json
+@model IEnumerable<ShoppingStationery.Models.ChiTietPhieuSc>
 
 @{
     ViewData["Title"] = "Index";
@@ -18,7 +19,11 @@
             background-color: #e0e0e0; /* Change background color on hover */
         }
 </style>
-
+@{
+    var userSession = Context.Session.GetString("User");
+    var user = JsonConvert.DeserializeObject<NguoiDung>(userSession);
+    var ls = new List<int>() { 6, 3,4 };
+}
 
 <div class="app-content pt-3 p-md-3 p-lg-4">
     <div class="container-xl">
@@ -72,17 +77,22 @@
                         @Html.DisplayFor(modelItem => item.MaPhieuScNavigation.MaPhieuSc)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MaTbNavigation.MaTb)
+                        @Html.DisplayFor(modelItem => item.MaTbNavigation.TenTb)
                     </td>
                     <td>
-                        @Html.ActionLink("Loại bỏ", "Delete", new { imaTB = item.MaTb, maPSC = item.MaPhieuSc }, new { @class = "delete-link" })
+                        @if (ls.Contains(user.MaCv.Value) && @ViewBag.trangthai == "Chưa hoàn thành")
+                        {
+                            @Html.ActionLink("Loại bỏ", "Delete", new { imaTB = item.MaTb, maPSC = item.MaPhieuSc }, new { @class = "delete-link" })
+                        }
                     </td>
                 </tr>
             }
         </tbody>
     </table>
     <div class="button">
-
-        <a asp-action="Create" asp-route-id="@ViewBag.PhieuId">Thêm mới</a>
+        @if (ls.Contains(user.MaCv.Value) && @ViewBag.trangthai == "Chưa hoàn thành" && @ViewBag.createSatus==1)
+        {
+            <a asp-action="Create" asp-route-id="@ViewBag.PhieuId">Thêm mới</a>
+        }
     </div>
 </div>

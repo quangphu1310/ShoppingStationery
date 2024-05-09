@@ -4,7 +4,11 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@{
+    var userSession = Context.Session.GetString("User");
+    var user = JsonConvert.DeserializeObject<NguoiDung>(userSession);
+    var ls = new List<int>() { 6, 3 };
+}
 
 <style>
     .col-md-4 {
@@ -58,6 +62,20 @@
         float: none; /* Remove floating */
         margin: 0 auto; /* Center the div horizontally */
         text-align: center; /* Center the contents of the div */
+    }
+
+    .td_btn_border {
+        /* border: 1px solid black !important; /* Màu sắc và độ dày của đường viền */ */ padding: 5px 10px !important; /* Khoảng cách từ nội dung đến viền */
+        text-decoration: none !important; /* Loại bỏ gạch chân mặc định */
+        color: black !important; /* Màu sắc của chữ */
+    }
+
+    .notice-annual-unpermitsion {
+        font-size: 18px;
+        color: red;
+        font-weight: bold;
+        /* Add more styles as needed */
+        text-align: center;
     }
 
 </style>
@@ -141,16 +159,31 @@
                                             @Html.DisplayFor(modelItem => item.MaNdNavigation.HoTen)
                                         </td>
                                         <td>
-                                            <a asp-controller="ChiTietPhieuMhs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuMh">Cập nhật chi tiết</a>
-                                            @{
-                                                if (item.TrangThai.Equals("Chưa thanh toán"))
+                                            <div class="addtion-btn">
+                                                @if (ls.Contains(user.MaCv.Value))
+                                                {
+                                                    <a asp-controller="ChiTietPhieuMhs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuMh">Cập nhật chi tiết</a>
+                                                }
+                                                @if (!ls.Contains(user.MaCv.Value))
+                                                {
+                                                    <a asp-controller="ChiTietPhieuMhs" asp-action="IndexByPhieu" asp-route-id="@item.MaPhieuMh">Chi tiết</a>
+                                                }
+                                                @{
+                                                    if (item.TrangThai.Equals("Chưa thanh toán") && ls.Contains(user.MaCv.Value))
+                                                    {
+                                                        <a class="td_btn_border">|</a>
+                                                        <a asp-controller="PhieuMuaHangs" asp-action="ThanhToan" asp-route-id="@item.MaPhieuMh"> Hoàn thành </a>
+                                                        <a class="td_btn_border">|</a>
+                                                        <a asp-controller="PhieuMuaHangs" asp-action="Huy" asp-route-id="@item.MaPhieuMh">| Hủy</a>
+                                                    }
+                                                }
+                                                @if (item.TrangThai.Equals("Đợi khởi tạo") && ls.Contains(user.MaCv.Value))
                                                 {
                                                     <a class="td_btn_border">|</a>
-                                                    <a asp-controller="PhieuMuaHangs" asp-action="ThanhToan" asp-route-id="@item.MaPhieuMh"> Hoàn thành </a>
-                                                    <a class="td_btn_border">|</a>
-                                                    <a asp-controller="PhieuMuaHangs" asp-action="Huy" asp-route-id="@item.MaPhieuMh">| Hủy</a>
+                                                    <a asp-controller="PhieuMuaHangs" asp-action="TaoPhieu" asp-route-id="@item.MaPhieuMh"> Tạo phiếu </a>
+
                                                 }
-                                            }
+                                            </div>
                                         </td>
                                     </tr>
                                 }
@@ -161,50 +194,62 @@
             </div><!--//app-card-->
         </div>
 
-        <div class="tab-pane fade show" id="PhieuMuaHang_taomoi_id" role="tabpanel" aria-labelledby="khoa-list">
-            <div class="app-card app-card-orders-table mb-5">
-                <div class="app-card-body">
-                    <div class="table-responsive">
-                        <div class="row">
-                            <div class="col-md-4">
-                                @{
-                                    var userSession = Context.Session.GetString("User");
-                                    var user = JsonConvert.DeserializeObject<NguoiDung>(userSession);
-                                }
-                                @using (Html.BeginForm("CreateNew", "PhieuMuaHangs", FormMethod.Post))
-                                {
-                                    <input type="hidden" id="UserID" name="UserID" value="@user.MaNd" />
-                                    <div>
-                                        <label for="GhiChu">Ghi chú: </label>
-                                        <input type="text" id="GhiChu" name="GhiChu" />
-                                    </div>
+        @if (user.MaCv != null)
+            @if (ls.Contains(user.MaCv.Value))
+            {
+                <div class="tab-pane fade show" id="PhieuMuaHang_taomoi_id" role="tabpanel" aria-labelledby="khoa-list">
+                    <div class="app-card app-card-orders-table mb-5">
+                        <div class="app-card-body">
+                            <div class="table-responsive">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @*  @{
+                                var userSession = Context.Session.GetString("User");
+                                var user = JsonConvert.DeserializeObject<NguoiDung>(userSession);
+                                } *@
+                                        @using (Html.BeginForm("CreateNew", "PhieuMuaHangs", FormMethod.Post))
+                                        {
+                                            <input type="hidden" id="UserID" name="UserID" value="@user.MaNd" />
+                                            <div>
+                                                <label for="GhiChu">Ghi chú: </label>
+                                                <input type="text" id="GhiChu" name="GhiChu" />
+                                            </div>
 
-                                    <div>
-                                        <label for="MaDv">Chọn đơn vị:</label>
-                                        @{
-                                            var dvdvList = ViewData["DVDV"] as SelectList;
-                                            if (dvdvList != null)
-                                            {
-                                                @Html.DropDownList("MaDv", dvdvList, "-- Chọn đơn vị --", new { @class = "form-control" })
-                                            }
-                                            else
-                                            {
-                                                <p>Dữ liệu đơn vị không tồn tại.</p>
-                                            }
+                                            <div>
+                                                <label for="MaDv">Chọn đơn vị:</label>
+                                                @{
+                                                    var dvdvList = ViewData["DVDV"] as SelectList;
+                                                    if (dvdvList != null)
+                                                    {
+                                                        @Html.DropDownList("MaDv", dvdvList, "-- Chọn đơn vị --", new { @class = "form-control" })
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Dữ liệu đơn vị không tồn tại.</p>
+                                                    }
+                                                }
+
+                                            </div>
+
+                                            <input type="submit" value="Submit" />
                                         }
 
                                     </div>
+                                </div>
 
-                                    <input type="submit" value="Submit" />
-                                }
+                            </div><!--//table-responsive-->
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
 
-                            </div>
-                        </div>
+                </div>
+            }
+        @if (!ls.Contains(user.MaCv.Value))
+        {
+            <div class="tab-pane fade show" id="PhieuMuaHang_taomoi_id" role="tabpanel" aria-labelledby="khoa-list">
+                <h3 class="notice-annual-unpermitsion">Bạn không có quyền tạo phiếu mua hàng. Vui lòng liên hệ phòng công tác sinh viên hoặc quản trị viên hệ thống để được giúp đỡ</h3>
+            </div>
+        }
 
-                    </div><!--//table-responsive-->
-                </div><!--//app-card-body-->
-            </div><!--//app-card-->
-        </div>
     </div>
 
 
